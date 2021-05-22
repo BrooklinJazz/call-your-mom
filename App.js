@@ -42,10 +42,13 @@ export default function App() {
     track();
   };
 
-  useEffect(async () => {
-    let time = await AsyncStorage.getItem("lastCalledTime");
-    console.log(time);
-    setLastCalledTime(time);
+  useEffect(() => {
+    async function fetchLastCalledTime() {
+      let time = await AsyncStorage.getItem("lastCalledTime");
+      console.log(time);
+      setLastCalledTime(time);
+    }
+    fetchLastCalledTime();
   }, []);
 
   return (
