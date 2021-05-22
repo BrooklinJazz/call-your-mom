@@ -35,19 +35,12 @@ const Settings = ({ setPhoneNumber, phoneNumber, saveAndNav }) => {
     </View>
   );
 };
-/*
-curl -H "Content-Type: application/json" -X POST "https://exp.host/--/api/v2/push/send" -d '{
-  "to": "ExponentPushToken[Tv_yttBStXj1FJukPCzmnS]",
-  "title":"hello",
-  "body": "world"
-}'
-*/
 
 const whenShouldYouCallYourMom = (lastCalledTime) => {
   const thresholdDaysToCallMom = 7;
   const daysSinceCalledMom = moment().diff(moment(lastCalledTime), "days");
 
-  // handle one day and today case
+  // TODO handle one day and today case
 
   if (daysSinceCalledMom < thresholdDaysToCallMom) {
     return `you should call your mom within ${
@@ -58,11 +51,27 @@ const whenShouldYouCallYourMom = (lastCalledTime) => {
   }
 };
 
+const sendPushNotification = ({ token, title, body }) => {
+  fetch("https://exp.host/--/api/v2/push/send", {
+    method: "POST",
+    headers: {
+      host: "exp.host",
+      accept: "application/json",
+      "accept-encoding": "gzip, deflate",
+      "content-type": "application/json",
+    },
+    body: JSON.stringify({
+      to: token,
+      title,
+      body,
+    }),
+  });
+};
+
 const Home = ({ callAndTrack, lastCalledTime }) => {
   const [token, setToken] = useState();
+
   const registerForPushNotificationsAsync = async () => {
-    console.log("STARTING");
-    console.warn(Constants.isDevice);
     if (Constants.isDevice) {
       const { status: existingStatus } =
         await Notifications.getPermissionsAsync();
@@ -76,7 +85,6 @@ const Home = ({ callAndTrack, lastCalledTime }) => {
         return;
       }
       const token = (await Notifications.getExpoPushTokenAsync()).data;
-      console.log(token);
       setToken(token);
     } else {
       alert("Must use physical device for Push Notifications");
@@ -93,7 +101,16 @@ const Home = ({ callAndTrack, lastCalledTime }) => {
   };
 
   useEffect(() => {
-    console.log("USE EFFECT");
+    if (token) {
+      sendPushNotification({
+        token,
+        title: "HELL YEAH",
+        body: "CALL YOUR DANG MOM",
+      });
+    }
+  }, [token]);
+
+  useEffect(() => {
     registerForPushNotificationsAsync();
   }, []);
   return (
