@@ -8,9 +8,12 @@ import {
   TouchableOpacity,
   TextInput,
   Button,
+  Platform,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import moment from "moment";
+import * as Notifications from "expo-notifications";
+import Constants from "expo-constants";
 
 const call = (phoneNumber) => Linking.openURL(`tel:${phoneNumber}`);
 
@@ -32,6 +35,13 @@ const Settings = ({ setPhoneNumber, phoneNumber, saveAndNav }) => {
     </View>
   );
 };
+/*
+curl -H "Content-Type: application/json" -X POST "https://exp.host/--/api/v2/push/send" -d '{
+  "to": "ExponentPushToken[Tv_yttBStXj1FJukPCzmnS]",
+  "title":"hello",
+  "body": "world"
+}'
+*/
 
 const whenShouldYouCallYourMom = (lastCalledTime) => {
   const thresholdDaysToCallMom = 7;
@@ -49,6 +59,43 @@ const whenShouldYouCallYourMom = (lastCalledTime) => {
 };
 
 const Home = ({ callAndTrack, lastCalledTime }) => {
+  const [token, setToken] = useState();
+  const registerForPushNotificationsAsync = async () => {
+    console.log("STARTING");
+    console.warn(Constants.isDevice);
+    if (Constants.isDevice) {
+      const { status: existingStatus } =
+        await Notifications.getPermissionsAsync();
+      let finalStatus = existingStatus;
+      if (existingStatus !== "granted") {
+        const { status } = await Notifications.requestPermissionsAsync();
+        finalStatus = status;
+      }
+      if (finalStatus !== "granted") {
+        alert("Failed to get push token for push notification!");
+        return;
+      }
+      const token = (await Notifications.getExpoPushTokenAsync()).data;
+      console.log(token);
+      setToken(token);
+    } else {
+      alert("Must use physical device for Push Notifications");
+    }
+
+    if (Platform.OS === "android") {
+      Notifications.setNotificationChannelAsync("default", {
+        name: "default",
+        importance: Notifications.AndroidImportance.MAX,
+        vibrationPattern: [0, 250, 250, 250],
+        lightColor: "#FF231F7C",
+      });
+    }
+  };
+
+  useEffect(() => {
+    console.log("USE EFFECT");
+    registerForPushNotificationsAsync();
+  }, []);
   return (
     <>
       <Text>
@@ -67,9 +114,17 @@ const Home = ({ callAndTrack, lastCalledTime }) => {
 const getStoredPhoneNumber = () => AsyncStorage.getItem("phoneNumber");
 
 export default function App() {
-  const [phoneNumber, setPhoneNumber] = useState(getStoredPhoneNumber());
+  const [phoneNumber, setPhoneNumber] = useState();
   const [nav, setNav] = useState("settings");
   const [lastCalledTime, setLastCalledTime] = useState();
+
+  useEffect(() => {
+    async function setPhoneNumberAsStoredValue() {
+      const storedNumber = await getStoredPhoneNumber();
+      setPhoneNumber(storedNumber);
+    }
+    setPhoneNumberAsStoredValue();
+  });
 
   const savePhoneNumberAndNext = () => {
     setNav("Home");
@@ -99,7 +154,7 @@ export default function App() {
   return (
     <View style={styles.container}>
       <StatusBar style="auto" />
-      {nav === "settings" ? (
+      {nav === "settings" || !phoneNumber ? (
         <Settings
           phoneNumber={phoneNumber}
           setPhoneNumber={setPhoneNumber}
