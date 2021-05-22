@@ -13,33 +13,61 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const call = (phoneNumber) => Linking.openURL(`tel:${phoneNumber}`);
 
-// track when user clicks call your mom.
-// display the last time user clicked call your mom.
+// I want to know when it's been too long since I called my mom.
+// Display and In-App view (it's been over 7 days)
+// Push Notification for when it's been too long.
 
-// "lastTimeUserCalledMom"
+const Settings = ({ setPhoneNumber, phoneNumber, saveAndNav }) => {
+  return (
+    <View>
+      <Text>Settings</Text>
+      <TextInput
+        onChangeText={setPhoneNumber}
+        value={phoneNumber}
+        style={styles.input}
+      />
+      <Button title={"SAVE"} onPress={() => saveAndNav()} />
+    </View>
+  );
+};
+
+const Home = ({ callAndTrack, lastCalledTime }) => {
+  return (
+    <>
+      <Text>
+        {lastCalledTime
+          ? `You last called your mom at ${lastCalledTime}`
+          : "You haven't called your mom"}
+      </Text>
+      <TouchableOpacity onPress={() => callAndTrack()}>
+        <Text>Call you momma!</Text>
+      </TouchableOpacity>
+    </>
+  );
+};
+
+const getStoredPhoneNumber = () => AsyncStorage.getItem("phoneNumber");
 
 export default function App() {
-  const [phone, setPhone] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState(getStoredPhoneNumber());
   const [nav, setNav] = useState("settings");
   const [lastCalledTime, setLastCalledTime] = useState();
 
-  const saveAndNav = () => {
+  const savePhoneNumberAndNext = () => {
     setNav("Home");
-    AsyncStorage.setItem("phoneNumber", phone);
+    AsyncStorage.setItem("phoneNumber", phoneNumber);
   };
 
-  const track = () => {
+  const trackCallingMom = () => {
     // record current datetime in asyncstorage
     const currentTime = new Date().toString();
-    console.log("setting last called time", currentTime);
     AsyncStorage.setItem("lastCalledTime", currentTime);
     setLastCalledTime(currentTime);
   };
 
   const callAndTrack = () => {
-    const phoneNumber = AsyncStorage.getItem("phoneNumber");
-    call(phoneNumber);
-    track();
+    call(getStoredPhoneNumber());
+    trackCallingMom();
   };
 
   useEffect(() => {
@@ -53,29 +81,16 @@ export default function App() {
 
   return (
     <View style={styles.container}>
-      {nav === "settings" ? (
-        <View>
-          <Text>Settings</Text>
-          <TextInput
-            onChangeText={setPhone}
-            value={phone}
-            style={styles.input}
-          />
-          <Button title={"SAVE"} onPress={() => saveAndNav()} />
-        </View>
-      ) : (
-        <>
-          <Text>
-            {lastCalledTime
-              ? `You last called your mom at ${lastCalledTime}`
-              : "You haven't called your mom"}
-          </Text>
-          <TouchableOpacity onPress={() => callAndTrack()}>
-            <Text>Call you momma!</Text>
-          </TouchableOpacity>
-        </>
-      )}
       <StatusBar style="auto" />
+      {nav === "settings" ? (
+        <Settings
+          phoneNumber={phoneNumber}
+          setPhoneNumber={setPhoneNumber}
+          saveAndNav={savePhoneNumberAndNext}
+        />
+      ) : (
+        <Home callAndTrack={callAndTrack} lastCalledTime={lastCalledTime} />
+      )}
     </View>
   );
 }
