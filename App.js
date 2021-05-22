@@ -33,13 +33,19 @@ const Settings = ({ setPhoneNumber, phoneNumber, saveAndNav }) => {
   );
 };
 
-const youNeedToCall = (lastCalledTime) => {
-  const threshold = moment().subtract(10, "seconds");
-  const isBefore = moment(lastCalledTime).isBefore(threshold);
+const whenShouldYouCallYourMom = (lastCalledTime) => {
+  const thresholdDaysToCallMom = 7;
+  const daysSinceCalledMom = moment().diff(moment(lastCalledTime), "days");
 
-  console.log(`${lastCalledTime} is before ${threshold.format()}`, isBefore);
+  // handle one day and today case
 
-  return isBefore;
+  if (daysSinceCalledMom < thresholdDaysToCallMom) {
+    return `you should call your mom within ${
+      thresholdDaysToCallMom - daysSinceCalledMom
+    } days`;
+  } else {
+    return "You should call your mom";
+  }
 };
 
 const Home = ({ callAndTrack, lastCalledTime }) => {
@@ -50,10 +56,7 @@ const Home = ({ callAndTrack, lastCalledTime }) => {
           ? `You last called your mom at ${lastCalledTime}`
           : "You haven't called your mom"}
       </Text>
-      <Text>
-        {youNeedToCall(lastCalledTime) &&
-          "It's been too long since you called your mom"}
-      </Text>
+      <Text>{whenShouldYouCallYourMom(lastCalledTime)}</Text>
       <TouchableOpacity onPress={() => callAndTrack()}>
         <Text>Call you momma!</Text>
       </TouchableOpacity>
