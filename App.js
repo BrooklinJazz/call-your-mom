@@ -40,7 +40,7 @@ const whenShouldYouCallYourMom = (lastCalledTime) => {
   const thresholdDaysToCallMom = 7;
   const daysSinceCalledMom = moment().diff(moment(lastCalledTime), "days");
 
-  // TODO handle one day and today case
+  // handle one day and today case
 
   if (daysSinceCalledMom < thresholdDaysToCallMom) {
     return `you should call your mom within ${
@@ -51,27 +51,36 @@ const whenShouldYouCallYourMom = (lastCalledTime) => {
   }
 };
 
-const sendPushNotification = ({ token, title, body }) => {
-  fetch("https://exp.host/--/api/v2/push/send", {
-    method: "POST",
-    headers: {
-      host: "exp.host",
-      accept: "application/json",
-      "accept-encoding": "gzip, deflate",
-      "content-type": "application/json",
-    },
-    body: JSON.stringify({
-      to: token,
-      title,
-      body,
-    }),
-  });
-};
+/*
+curl -H "Content-Type: application/json" -X POST "https://exp.host/--/api/v2/push/send" -d '{
+  "to": "ExponentPushToken[btcg4ZJKWPxopV9xvNGLM9]",
+  "title":"FromApp",
+  "body": "world"
+}'
+*/
 
 const Home = ({ callAndTrack, lastCalledTime }) => {
   const [token, setToken] = useState();
 
+  const sendNotification = () => {
+    fetch("https://exp.host/--/api/v2/push/send", {
+      method: "POST",
+      headers: {
+        host: "exp.host",
+        accept: "application/json",
+        "accept-encoding": "gzip, deflate",
+        "content-type": "application/json",
+      },
+      body: JSON.stringify({
+        to: "",
+        title: "From App",
+        body: "World",
+      }),
+    }).then((res) => console.log(res));
+  };
   const registerForPushNotificationsAsync = async () => {
+    console.log("STARTING");
+    console.warn(Constants.isDevice);
     if (Constants.isDevice) {
       const { status: existingStatus } =
         await Notifications.getPermissionsAsync();
@@ -85,6 +94,7 @@ const Home = ({ callAndTrack, lastCalledTime }) => {
         return;
       }
       const token = (await Notifications.getExpoPushTokenAsync()).data;
+      console.log(token);
       setToken(token);
     } else {
       alert("Must use physical device for Push Notifications");
@@ -102,15 +112,12 @@ const Home = ({ callAndTrack, lastCalledTime }) => {
 
   useEffect(() => {
     if (token) {
-      sendPushNotification({
-        token,
-        title: "HELL YEAH",
-        body: "CALL YOUR DANG MOM",
-      });
+      sendNotification();
     }
   }, [token]);
 
   useEffect(() => {
+    console.log("USE EFFECT");
     registerForPushNotificationsAsync();
   }, []);
   return (
