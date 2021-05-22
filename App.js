@@ -10,11 +10,13 @@ import {
   Button,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import moment from "moment";
 
 const call = (phoneNumber) => Linking.openURL(`tel:${phoneNumber}`);
 
 // I want to know when it's been too long since I called my mom.
 // Display and In-App view (it's been over 7 days)
+// Display an In-App view (you have 2 days to call your mom)
 // Push Notification for when it's been too long.
 
 const Settings = ({ setPhoneNumber, phoneNumber, saveAndNav }) => {
@@ -31,6 +33,15 @@ const Settings = ({ setPhoneNumber, phoneNumber, saveAndNav }) => {
   );
 };
 
+const youNeedToCall = (lastCalledTime) => {
+  const threshold = moment().subtract(10, "seconds");
+  const isBefore = moment(lastCalledTime).isBefore(threshold);
+
+  console.log(`${lastCalledTime} is before ${threshold.format()}`, isBefore);
+
+  return isBefore;
+};
+
 const Home = ({ callAndTrack, lastCalledTime }) => {
   return (
     <>
@@ -38,6 +49,10 @@ const Home = ({ callAndTrack, lastCalledTime }) => {
         {lastCalledTime
           ? `You last called your mom at ${lastCalledTime}`
           : "You haven't called your mom"}
+      </Text>
+      <Text>
+        {youNeedToCall(lastCalledTime) &&
+          "It's been too long since you called your mom"}
       </Text>
       <TouchableOpacity onPress={() => callAndTrack()}>
         <Text>Call you momma!</Text>
@@ -59,7 +74,6 @@ export default function App() {
   };
 
   const trackCallingMom = () => {
-    // record current datetime in asyncstorage
     const currentTime = new Date().toString();
     AsyncStorage.setItem("lastCalledTime", currentTime);
     setLastCalledTime(currentTime);
