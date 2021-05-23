@@ -12,3 +12,5 @@ export const selectShouldNotifyMomOnBirthday = (state) =>
   state.momReducer.shouldNotifyMomOnBirthday;
 export const selectShouldNotifyMomOnMothersDay = (state) =>
   state.momReducer.shouldNotifyMomOnMothersDay;
+export const selectFrequencyToCallMomInDays = (state) =>
+  state.momReducer.frequencyToCallMomInDays;

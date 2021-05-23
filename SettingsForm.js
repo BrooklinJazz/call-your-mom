@@ -9,19 +9,18 @@ import {
   setShouldNotifyMomOnMothersDayAction,
   setShouldNotifyMomOnBirthdayAction,
   setMomsBirthdayAction,
+  setFrequencyToCallMomInDaysAction,
 } from "./momSlice";
 import {
   selectPhoneNumber,
   selectMomsBirthday,
   selectShouldNotifyMomOnBirthday,
   selectShouldNotifyMomOnMothersDay,
+  selectFrequencyToCallMomInDays,
 } from "./selectors";
-import { Routes } from "./Routes";
 import * as globalStyles from "./Styles";
 
 export const SettingsForm = ({ tempPhoneNumber, setTempPhoneNumber }) => {
-  const [callInterval, setCallInterval] = useState("1");
-
   const setRemindOnMothersDay = (shouldRemind) =>
     dispatch(setShouldNotifyMomOnMothersDayAction(shouldRemind));
 
@@ -29,10 +28,13 @@ export const SettingsForm = ({ tempPhoneNumber, setTempPhoneNumber }) => {
     dispatch(setShouldNotifyMomOnBirthdayAction(shouldRemind));
 
   const setMomsBirthday = (date) => dispatch(setMomsBirthdayAction(date));
+  const setFrequencyToCallMomInDays = (date) =>
+    dispatch(setFrequencyToCallMomInDaysAction(date));
 
   const momsBirthday = useSelector(selectMomsBirthday);
   const remindOnBirthday = useSelector(selectShouldNotifyMomOnBirthday);
   const remindOnMothersDay = useSelector(selectShouldNotifyMomOnMothersDay);
+  const frequencyToCallMomInDays = useSelector(selectFrequencyToCallMomInDays);
 
   const dispatch = useDispatch();
 
@@ -96,8 +98,8 @@ export const SettingsForm = ({ tempPhoneNumber, setTempPhoneNumber }) => {
         <View style={{ flexDirection: "row" }}>
           <Text>Every</Text>
           <TextInput
-            value={callInterval}
-            onChangeText={setCallInterval}
+            value={frequencyToCallMomInDays}
+            onChangeText={setFrequencyToCallMomInDays}
             style={styles.callIntervalInput}
           />
           <Text>day(s)</Text>

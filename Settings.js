@@ -11,6 +11,7 @@ export const Settings = () => {
       <Card>
         <SettingsForm />
       </Card>
+      <Footer />
     </>
   );
 };

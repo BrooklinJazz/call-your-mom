@@ -7,35 +7,24 @@ import { useDispatch, useSelector } from "react-redux";
 import { Surface, Title, Button } from "react-native-paper";
 
 import { setLastTimeCalledMom, addToCallHistoryAction } from "./momSlice";
-import { selectLastCalledTime, selectPhoneNumber } from "./selectors";
+import {
+  selectFrequencyToCallMomInDays,
+  selectLastCalledTime,
+  selectPhoneNumber,
+} from "./selectors";
 import { call } from "./call";
 import moment from "moment";
 import { Footer } from "./Footer";
 import { boxShadow, colors, cornerRadius, header, button } from "./Styles";
 
-export const whenShouldYouCallYourMom = (lastCalledTime) => {
-  return "7 days";
-  // const thresholdDaysToCallMom = 7;
-  // const daysSinceCalledMom = moment().diff(moment(lastCalledTime), "days");
-
-  // // handle one day and today case
-
-  // if (daysSinceCalledMom < thresholdDaysToCallMom) {
-  //   return `you should call your mom within ${
-  //     thresholdDaysToCallMom - daysSinceCalledMom
-  //   } days`;
-  // } else {
-  //   return "You should call your mom";
-  // }
-};
-
 export const Home = () => {
   const dispatch = useDispatch();
   // const [token, setToken] = useState();
-  const lastCalledTime = useSelector(selectLastCalledTime);
+  const lastCalledTimeDate = useSelector(selectLastCalledTime);
   const setLastCalledTime = (time) => dispatch(setLastTimeCalledMom(time));
   const addToCallHistory = (time) => dispatch(addToCallHistoryAction(time));
   const phoneNumber = useSelector(selectPhoneNumber);
+  const frequencyToCallMomInDays = useSelector(selectFrequencyToCallMomInDays);
 
   const trackCallingMom = () => {
     const currentTime = new Date().toString();
@@ -46,6 +35,27 @@ export const Home = () => {
   const callAndTrack = () => {
     call(phoneNumber);
     trackCallingMom();
+  };
+
+  const daysSinceLastCalled = moment().diff(lastCalledTime, "days");
+  const lastCalledTime = moment(lastCalledTimeDate);
+  const isUpcomingCall = daysSinceLastCalled <= frequencyToCallMomInDays;
+  const isOutstandingCall = !isUpcomingCall;
+  const outstandingDaysSinceCalling =
+    daysSinceLastCalled - frequencyToCallMomInDays;
+  const whenShouldYouCallYourMom = () => {
+    const daysUntilCall = frequencyToCallMomInDays - daysSinceLastCalled;
+    if (isUpcomingCall && daysUntilCall === 0) {
+      return "today";
+    } else if (isUpcomingCall && daysUntilCall === 1) {
+      return "1 day";
+    } else if (isUpcomingCall) {
+      return daysUntilCall + " days";
+    } else if (isOutstandingCall && outstandingDaysSinceCalling === 1) {
+      return "1 day";
+    } else if (isOutstandingCall) {
+      return outstandingDaysSinceCalling + " days";
+    }
   };
 
   const youLastCalledYourMom = () => {
@@ -148,8 +158,12 @@ export const Home = () => {
                 top: "40%",
               }}
             >
-              <Text>Call Mom In</Text>
-              <Title>{whenShouldYouCallYourMom(lastCalledTime)}</Title>
+              {isUpcomingCall ? (
+                <Text>Upcoming Call</Text>
+              ) : (
+                <Text style={{ color: "red" }}>Outstanding Call</Text>
+              )}
+              <Title>{whenShouldYouCallYourMom()}</Title>
             </View>
           </View>
 
