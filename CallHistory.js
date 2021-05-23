@@ -16,6 +16,7 @@ export const CallHistory = () => {
         <ScrollView>
           {callHistory.map((each, i) => (
             <Surface
+              key={each + i}
               style={{
                 backgroundColor: "white",
                 marginBottom: 20,
