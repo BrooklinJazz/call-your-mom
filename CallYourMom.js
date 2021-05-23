@@ -14,7 +14,6 @@ import * as globalStyles from "./Styles";
 
 import { getStoredPhoneNumber } from "./getStoredPhoneNumber";
 import { StorageKeys } from "./StorageKeys";
-import { Routes } from "./Routes";
 import { selectPhoneNumber } from "./selectors";
 import { Setup } from "./Setup";
 

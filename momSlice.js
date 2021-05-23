@@ -6,7 +6,7 @@ const momSlice = createSlice({
   name: "mom",
   initialState: {
     phoneNumber: undefined,
-    currentRoute: Routes.Home,
+    currentRoute: Routes.CallHistory,
     lastCalledTime: undefined,
     callHistory: [],
   },
@@ -45,7 +45,7 @@ export const {
   setNavigation,
   setLastTimeCalledMom,
   setCallHistoryAction,
-  addToCallHistoryAction
+  addToCallHistoryAction,
 } = momSlice.actions;
 
 export default momSlice.reducer;
