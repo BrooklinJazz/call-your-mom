@@ -4,7 +4,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as Notifications from "expo-notifications";
 import Constants from "expo-constants";
 import { useDispatch, useSelector } from "react-redux";
-import { setLastTimeCalledMom } from "./momSlice";
+import { setLastTimeCalledMom, addToCallHistoryAction } from "./momSlice";
 import { selectLastCalledTime, selectPhoneNumber } from "./selectors";
 import { call } from "./call";
 import moment from "moment";
@@ -29,11 +29,13 @@ export const Home = () => {
   const [token, setToken] = useState();
   const lastCalledTime = useSelector(selectLastCalledTime);
   const setLastCalledTime = (time) => dispatch(setLastTimeCalledMom(time));
+  const addToCallHistory = (time) => dispatch(addToCallHistoryAction(time));
   const phoneNumber = useSelector(selectPhoneNumber);
 
   const trackCallingMom = () => {
     const currentTime = new Date().toString();
     setLastCalledTime(currentTime);
+    addToCallHistory(currentTime);
   };
 
   const callAndTrack = () => {

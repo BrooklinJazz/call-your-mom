@@ -38,7 +38,9 @@ export function CallYourMom() {
     }
     async function fetchCallHistory() {
       let callHistory = await AsyncStorage.getItem(StorageKeys.callHistory);
-      setCallHistory(callHistory || []);
+      if (callHistory) {
+        setCallHistory(JSON.parse(callHistory));
+      }
     }
     fetchCallHistory();
     setPhoneNumberAsStoredValue();

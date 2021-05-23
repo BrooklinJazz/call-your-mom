@@ -18,16 +18,21 @@ const momSlice = createSlice({
       state.currentRoute = action.payload;
     },
     setLastTimeCalledMom(state, action) {
-      // AsyncStorage.setItem(StorageKeys.lastCallTime, action.payload);
+      AsyncStorage.setItem(StorageKeys.lastCallTime, action.payload);
+
+      state.lastCalledTime = action.payload;
+    },
+    addToCallHistoryAction(state, action) {
       const newCallHistory = [...state.callHistory, action.payload].filter(
         (each) => !!each
       );
-      // AsyncStorage.setItem(
-      //   StorageKeys.callHistory,
-      //   JSON.stringify(newCallHistory)
-      // );
+
+      AsyncStorage.setItem(
+        StorageKeys.callHistory,
+        JSON.stringify(newCallHistory)
+      );
+
       state.callHistory = newCallHistory;
-      state.lastCalledTime = action.payload;
     },
     setCallHistoryAction(state, action) {
       state.callHistory = action.payload || [];
@@ -40,6 +45,7 @@ export const {
   setNavigation,
   setLastTimeCalledMom,
   setCallHistoryAction,
+  addToCallHistoryAction
 } = momSlice.actions;
 
 export default momSlice.reducer;
