@@ -14,6 +14,6 @@ export const Setup = () => {
     if (phoneNumber) {
       goHome();
     }
-  }, []);
+  }, [phoneNumber]);
   return <SettingsForm />;
 };
