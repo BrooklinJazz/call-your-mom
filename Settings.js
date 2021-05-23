@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Footer } from "./Footer";
 import { SettingsForm } from "./SettingsForm";
 import Card from "./components/Card";
@@ -10,7 +10,14 @@ import { header } from "./Styles";
 export const Settings = () => {
   const phoneNumber = useSelector(selectPhoneNumber);
   const dispatch = useDispatch();
-  const setPhoneNumber = (num) => dispatch(setMomsPhoneNumber(num));
+  const setPhoneNumber = (num) => num && dispatch(setMomsPhoneNumber(num));
+  const [tempPhoneNumber, setTempPhoneNumber] = useState(phoneNumber);
+
+  // it's loading with undefined initial tempPhoneNumber
+  // this fixes the bug
+  useEffect(() => {
+    setTempPhoneNumber(phoneNumber);
+  }, [phoneNumber]);
   return (
     <>
       <Wrapper>
@@ -18,8 +25,16 @@ export const Settings = () => {
         <Card>
           <View style={{ paddingHorizontal: 20, paddingVertical: 10 }}>
             <SettingsForm
-              tempPhoneNumber={phoneNumber}
-              setTempPhoneNumber={setPhoneNumber}
+              onBlurPhoneNumber={() => {
+                console.warn(tempPhoneNumber);
+                if (tempPhoneNumber) {
+                  setPhoneNumber(tempPhoneNumber);
+                } else {
+                  setTempPhoneNumber(phoneNumber);
+                }
+              }}
+              tempPhoneNumber={tempPhoneNumber}
+              setTempPhoneNumber={setTempPhoneNumber}
             />
           </View>
         </Card>

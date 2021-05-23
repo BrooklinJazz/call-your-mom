@@ -45,7 +45,10 @@ export const Home = () => {
   };
 
   const lastCalledTime = lastCalledTimeDate && moment(lastCalledTimeDate);
-  const daysSinceLastCalled = moment().diff(lastCalledTime, "days");
+  const daysSinceLastCalled = lastCalledTime
+    ? moment().diff(lastCalledTime, "days")
+    : frequencyToCallMomInDays; // set to frequencyToCallMomInDays to trigger "today" call case
+
   const isUpcomingCall = daysSinceLastCalled <= frequencyToCallMomInDays;
   const isOutstandingCall = !isUpcomingCall;
   const outstandingDaysSinceCalling =
@@ -53,7 +56,6 @@ export const Home = () => {
 
   let whenShouldYouCallYourMom;
   const daysUntilCall = frequencyToCallMomInDays - daysSinceLastCalled;
-
   if (isUpcomingCall && daysUntilCall === 0) {
     whenShouldYouCallYourMom = "today";
   } else if (isUpcomingCall && daysUntilCall === 1) {

@@ -20,7 +20,11 @@ import {
 } from "./selectors";
 import * as globalStyles from "./Styles";
 import { MaskedTextInput } from "react-native-mask-text";
-export const SettingsForm = ({ tempPhoneNumber, setTempPhoneNumber }) => {
+export const SettingsForm = ({
+  tempPhoneNumber,
+  setTempPhoneNumber,
+  onBlurPhoneNumber,
+}) => {
   const setRemindOnMothersDay = (shouldRemind) =>
     dispatch(setShouldNotifyMomOnMothersDayAction(shouldRemind));
 
@@ -56,6 +60,7 @@ export const SettingsForm = ({ tempPhoneNumber, setTempPhoneNumber }) => {
           source={require("./assets/phone.png")}
         />
         <MaskedTextInput
+          onBlur={onBlurPhoneNumber}
           keyboardType="number-pad"
           mask={"999-999-9999"}
           onChangeText={setTempPhoneNumber}
