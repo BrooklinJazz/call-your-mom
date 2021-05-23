@@ -8,7 +8,6 @@ export default Card = ({ children }) => {
 
 const styles = StyleSheet.create({
   card: {
-    ...globalStyles.centerContents,
     ...globalStyles.boxShadow,
     backgroundColor: globalStyles.colors.white,
     color: globalStyles.colors.black,
