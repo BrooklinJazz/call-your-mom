@@ -1,7 +1,7 @@
 import moment from "moment";
 import React from "react";
 import { ScrollView, Text, View } from "react-native";
-import { Surface, Title } from "react-native-paper";
+import { Surface } from "react-native-paper";
 import { useSelector } from "react-redux";
 import { Footer } from "./Footer";
 import { selectCallHistory } from "./selectors";
@@ -9,6 +9,7 @@ import { cornerRadius, header } from "./Styles";
 
 export const CallHistory = () => {
   const callHistory = useSelector(selectCallHistory);
+
   return (
     <View style={{ width: "100%", height: "100%" }}>
       <View style={{ flex: 1, padding: "10%" }}>

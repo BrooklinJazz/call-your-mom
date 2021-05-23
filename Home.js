@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   Text,
   TouchableOpacity,
@@ -7,11 +7,10 @@ import {
   Image,
   TouchableWithoutFeedback,
 } from "react-native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import * as Notifications from "expo-notifications";
-import Constants from "expo-constants";
+
 import { useDispatch, useSelector } from "react-redux";
 import { Surface, Title, Button } from "react-native-paper";
+import * as ImagePicker from "expo-image-picker";
 
 import { setLastTimeCalledMom, addToCallHistoryAction } from "./momSlice";
 import {
@@ -22,16 +21,16 @@ import {
 import { call } from "./call";
 import moment from "moment";
 import { Footer } from "./Footer";
-import { boxShadow, colors, cornerRadius, header, button } from "./Styles";
+import { colors, cornerRadius, button } from "./Styles";
 
 export const Home = () => {
   const dispatch = useDispatch();
-  // const [token, setToken] = useState();
   const lastCalledTimeDate = useSelector(selectLastCalledTime);
   const setLastCalledTime = (time) => dispatch(setLastTimeCalledMom(time));
   const addToCallHistory = (time) => dispatch(addToCallHistoryAction(time));
   const phoneNumber = useSelector(selectPhoneNumber);
   const frequencyToCallMomInDays = useSelector(selectFrequencyToCallMomInDays);
+  const [image, setImage] = useState(null);
 
   const trackCallingMom = () => {
     const currentTime = new Date().toString();
@@ -74,60 +73,42 @@ export const Home = () => {
       "You last called your mom " + moment(lastCalledTime).fromNow()
     );
   };
-  // const sendNotification = ({ token }) => {
-  //   fetch("https://exp.host/--/api/v2/push/send", {
-  //     method: "POST",
-  //     headers: {
-  //       host: "exp.host",
-  //       accept: "application/json",
-  //       "accept-encoding": "gzip, deflate",
-  //       "content-type": "application/json",
-  //     },
-  //     body: JSON.stringify({
-  //       to: token,
-  //       title: "From App",
-  //       body: "World",
-  //     }),
-  //   });
-  // };
-  // const registerForPushNotificationsAsync = async () => {
-  //   if (Constants.isDevice) {
-  //     const { status: existingStatus } =
-  //       await Notifications.getPermissionsAsync();
-  //     let finalStatus = existingStatus;
-  //     if (existingStatus !== "granted") {
-  //       const { status } = await Notifications.requestPermissionsAsync();
-  //       finalStatus = status;
-  //     }
-  //     if (finalStatus !== "granted") {
-  //       alert("Failed to get push token for push notification!");
-  //       return;
-  //     }
-  //     const token = (await Notifications.getExpoPushTokenAsync()).data;
-  //     setToken(token);
-  //   } else {
-  //     alert("Must use physical device for Push Notifications");
-  //   }
 
-  //   if (Platform.OS === "android") {
-  //     Notifications.setNotificationChannelAsync("default", {
-  //       name: "default",
-  //       importance: Notifications.AndroidImportance.MAX,
-  //       vibrationPattern: [0, 250, 250, 250],
-  //       lightColor: "#FF231F7C",
-  //     });
-  //   }
-  // };
+  const openPhotoUpload = async () => {
+    await requestUploadPermissions();
 
-  // useEffect(() => {
-  //   if (token) {
-  //     sendNotification({ token });
-  //   }
-  // }, [token]);
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
 
-  // useEffect(() => {
-  //   registerForPushNotificationsAsync();
-  // }, []);
+    console.log(result);
+
+    if (!result.cancelled) {
+      setImage(result.uri);
+    }
+  };
+
+  const renderMomPhoto = () => {
+    if (image) {
+      return { uri: image };
+    }
+
+    return require("./assets/PlaceholderMom.png");
+  };
+
+  const requestUploadPermissions = async () => {
+    if (Platform.OS !== "web") {
+      const { status } =
+        await ImagePicker.requestMediaLibraryPermissionsAsync();
+      if (status !== "granted") {
+        alert("Sorry, we need camera roll permissions to make this work!");
+      }
+    }
+  };
+
   return (
     <View
       style={{
@@ -138,8 +119,31 @@ export const Home = () => {
       <View style={{ flex: 1 }}>
         <Image
           style={{ width: "100%", height: "60%" }}
-          source={require("./assets/PlaceholderMom.png")}
+          source={renderMomPhoto()}
         />
+        <TouchableOpacity
+          onPress={() => openPhotoUpload()}
+          style={{
+            width: 60,
+            height: 60,
+            position: "absolute",
+            top: 330,
+            left: 300,
+            elevation: 20,
+            flex: 1,
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <Image
+            style={{
+              height: "90%",
+              width: "90%",
+              borderRadius: 50,
+            }}
+            source={require("./assets/editCircle.png")}
+          />
+        </TouchableOpacity>
         <Surface
           style={{
             elevation: 4,
@@ -153,6 +157,7 @@ export const Home = () => {
             borderTopLeftRadius: cornerRadius,
             borderTopRightRadius: cornerRadius,
             alignItems: "center",
+            justifyContent: "space-between",
           }}
         >
           <Text style={{ width: "60%", textAlign: "center" }}>

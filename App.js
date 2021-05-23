@@ -10,6 +10,7 @@ import {
 } from "@expo-google-fonts/poppins";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { PersistGate } from "redux-persist/integration/react";
+
 export default function App() {
   const [fontsLoaded] = useFonts({ Poppins_400Regular, Poppins_700Bold });
 

@@ -1,18 +1,14 @@
-import React, { useState } from "react";
+import React from "react";
 import { Text, View, TextInput, StyleSheet, Image } from "react-native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { Surface, Title, Button } from "react-native-paper";
+import { Button } from "react-native-paper";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  setMomsPhoneNumber,
-  setNavigation,
   setShouldNotifyMomOnMothersDayAction,
   setShouldNotifyMomOnBirthdayAction,
   setMomsBirthdayAction,
   setFrequencyToCallMomInDaysAction,
 } from "./momSlice";
 import {
-  selectPhoneNumber,
   selectMomsBirthday,
   selectShouldNotifyMomOnBirthday,
   selectShouldNotifyMomOnMothersDay,
@@ -20,6 +16,7 @@ import {
 } from "./selectors";
 import * as globalStyles from "./Styles";
 import { MaskedTextInput } from "react-native-mask-text";
+
 export const SettingsForm = ({
   tempPhoneNumber,
   setTempPhoneNumber,
@@ -39,6 +36,7 @@ export const SettingsForm = ({
   const remindOnBirthday = useSelector(selectShouldNotifyMomOnBirthday);
   const remindOnMothersDay = useSelector(selectShouldNotifyMomOnMothersDay);
   const frequencyToCallMomInDays = useSelector(selectFrequencyToCallMomInDays);
+
   const dispatch = useDispatch();
 
   const getActiveColor = (isActive) =>

@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { Text, StyleSheet, View } from "react-native";
+import React, { useState } from "react";
+import { Text, View } from "react-native";
 import { SettingsForm } from "./SettingsForm";
 import Card from "./components/Card";
 import Wrapper from "./components/Wrapper";
@@ -14,11 +14,13 @@ export const Setup = () => {
   const [tempPhoneNumber, setTempPhoneNumber] = useState("");
   const dispatch = useDispatch();
   const setNav = (route) => dispatch(setNavigation(route));
+
   const saveAndNav = () => {
     dispatch(setMomsPhoneNumber(tempPhoneNumber));
     setNav(Routes.Home);
     AsyncStorage.setItem("phoneNumber", tempPhoneNumber);
   };
+
   return (
     <Wrapper>
       <Text style={globalStyles.header}>Set up mom's information</Text>

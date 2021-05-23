@@ -1,17 +1,18 @@
 import React from "react";
-import { TouchableOpacity, View, Image } from "react-native";
+import { TouchableOpacity, Image } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { setNavigation } from "./momSlice";
-import { Entypo } from "@expo/vector-icons";
 import { Routes } from "./Routes";
 import { Surface } from "react-native-paper";
 import { selectNavigation as selectCurrentRoute } from "./selectors";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+
 export const Footer = () => {
   const dispatch = useDispatch();
   const navigate = (route) => dispatch(setNavigation(route));
   const currentRoute = useSelector(selectCurrentRoute);
   const isOn = (route) => currentRoute === route;
+
   const callHistoryIcon = isOn(Routes.CallHistory)
     ? require("./assets/phoneHistoryOn.png")
     : require("./assets/phoneHistoryOff.png");
@@ -25,6 +26,7 @@ export const Footer = () => {
     : require("./assets/settingOff.png");
 
   const { bottom } = useSafeAreaInsets();
+
   return (
     <Surface
       style={{

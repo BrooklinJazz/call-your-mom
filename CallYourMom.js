@@ -13,8 +13,8 @@ console.disableRedBox = true;
 
 export function CallYourMom() {
   const phoneNumber = useSelector(selectPhoneNumber);
-  // persistor.purge();
-  // console.warn(persistor.getState());
+  persistor.purge();
+  console.warn(persistor.getState());
   return (
     <>
       <StatusBar style="auto" />

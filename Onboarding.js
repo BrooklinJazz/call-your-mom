@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Image, TouchableOpacity, View } from "react-native";
+import { Image, View } from "react-native";
 import { Title } from "react-native-paper";
 import { Setup } from "./Setup";
 import { NextButton } from "./components/NextButton";
@@ -26,6 +26,7 @@ const Welcome = ({ onNext }) => {
 
 export const Onboarding = () => {
   const [displayWelcome, setDisplayWelcome] = useState(true);
+
   return displayWelcome ? (
     <Welcome onNext={() => setDisplayWelcome(false)} />
   ) : (
