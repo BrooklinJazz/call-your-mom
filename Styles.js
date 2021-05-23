@@ -19,3 +19,15 @@ export const boxShadow = {
 };
 
 export const cornerRadius = 20;
+
+export const header = {
+  fontSize: 30,
+  fontFamily: fonts.bold,
+  paddingVertical: 30,
+};
+
+export const centerContents = {
+  flex: 1,
+  alignItems: "center",
+  justifyContent: "center",
+};

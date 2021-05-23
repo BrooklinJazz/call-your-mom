@@ -1,6 +1,6 @@
 import { StatusBar } from "expo-status-bar";
 import React, { useEffect } from "react";
-import { View, StyleSheet, SafeAreaView, Text } from "react-native";
+import { SafeAreaView, StyleSheet, Text } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { useDispatch, useSelector } from "react-redux";
@@ -41,19 +41,17 @@ export function CallYourMom() {
   return (
     <>
       <StatusBar style="auto" />
-      <View style={styles.container}>
+      <SafeAreaView style={styles.container}>
         {/* {phoneNumber ? <Navigation /> : <Setup />} */}
         <Setup />
-      </View>
+      </SafeAreaView>
     </>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
+    ...globalStyles.centerContents,
     backgroundColor: globalStyles.colors.lavender,
   },
 });

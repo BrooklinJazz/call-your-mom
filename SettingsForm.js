@@ -17,7 +17,6 @@ export const SettingsForm = () => {
   };
   return (
     <View>
-      <Text>Settings</Text>
       {/* <Slider /> */}
       <TextInput
         onChangeText={setPhoneNumber}
@@ -29,7 +28,7 @@ export const SettingsForm = () => {
   );
 };
 
-export const styles = StyleSheet.create({
+const styles = StyleSheet.create({
   input: {
     height: 40,
     width: 100,
