@@ -49,7 +49,10 @@ export const Home = () => {
   };
 
   const youLastCalledYourMom = () => {
-    return "You last called your mom " + moment(lastCalledTime).fromNow();
+    return (
+      lastCalledTime &&
+      "You last called your mom " + moment(lastCalledTime).fromNow()
+    );
   };
   // const sendNotification = ({ token }) => {
   //   fetch("https://exp.host/--/api/v2/push/send", {
