@@ -2,6 +2,8 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { selectNavigation as selectCurrentRoute } from "./selectors";
 import { Home } from "./Home";
+import { Setup } from "./Setup";
+import { Settings } from "./Settings";
 
 export const Routes = {
   Settings: "Settings",
@@ -19,6 +21,6 @@ export const Navigation = () => {
     case Routes.Home:
       return <Home />;
     default:
-      break;
+      <View />;
   }
 };

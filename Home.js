@@ -8,6 +8,14 @@ import { setLastTimeCalledMom } from "./momSlice";
 import { selectLastCalledTime, selectPhoneNumber } from "./selectors";
 import { call } from "./call";
 import moment from "moment";
+import { Ionicons } from "@expo/vector-icons";
+const Footer = () => {
+  return (
+    <View style={{ justifyContent: "space-between" }}>
+      <Ionicons name="phone" size={32} color="black" />
+    </View>
+  );
+};
 
 export const whenShouldYouCallYourMom = (lastCalledTime) => {
   const thresholdDaysToCallMom = 7;
@@ -106,6 +114,7 @@ export const Home = () => {
       <TouchableOpacity onPress={() => callAndTrack()}>
         <Text>Call you momma!</Text>
       </TouchableOpacity>
+      <Footer />
     </>
   );
 };
