@@ -51,8 +51,7 @@ export function CallYourMom() {
     <>
       <StatusBar style="auto" />
       <SafeAreaView style={styles.container}>
-        {/* {phoneNumber ? <Navigation /> : <Setup />} */}
-        <Setup />
+        {phoneNumber ? <Navigation /> : <Setup />}
       </SafeAreaView>
     </>
   );
