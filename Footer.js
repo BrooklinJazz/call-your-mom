@@ -1,21 +1,37 @@
 import React from "react";
 import { TouchableOpacity, View, Image } from "react-native";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setNavigation } from "./momSlice";
 import { Entypo } from "@expo/vector-icons";
 import { Routes } from "./Routes";
+import { Surface } from "react-native-paper";
+import { selectNavigation as selectCurrentRoute } from "./selectors";
 
 export const Footer = () => {
   const dispatch = useDispatch();
   const navigate = (route) => dispatch(setNavigation(route));
+  const currentRoute = useSelector(selectCurrentRoute);
+  const isOn = (route) => currentRoute === route;
+  const callHistoryIcon = isOn(Routes.CallHistory)
+    ? require("./assets/phoneHistoryOn.png")
+    : require("./assets/phoneHistoryOff.png");
+
+  const homeIcon = isOn(Routes.Home)
+    ? require("./assets/logoOn.png")
+    : require("./assets/logoOff.png");
+
+  const settingsIcon = isOn(Routes.Settings)
+    ? require("./assets/settingOn.png")
+    : require("./assets/settingOff.png");
   return (
-    <View
+    <Surface
       style={{
+        elevation: 12,
         justifyContent: "space-around",
         flexDirection: "row",
         alignItems: "center",
         justifySelf: "flex-end",
-        height: "15%",
+        height: "10%",
         width: "100%",
       }}
     >
@@ -23,21 +39,21 @@ export const Footer = () => {
         onPress={() => navigate(Routes.CallHistory)}
         style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
       >
-        <Entypo name="phone" size={32} color="black" />
+        <Image source={callHistoryIcon} />
       </TouchableOpacity>
 
       <TouchableOpacity
         onPress={() => navigate(Routes.Home)}
         style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
       >
-        <Image source={require("./assets/logo.png")} />
+        <Image source={homeIcon} />
       </TouchableOpacity>
       <TouchableOpacity
         onPress={() => navigate(Routes.Settings)}
         style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
       >
-        <Entypo name="cog" size={32} color="black" />
+        <Image source={settingsIcon} />
       </TouchableOpacity>
-    </View>
+    </Surface>
   );
 };

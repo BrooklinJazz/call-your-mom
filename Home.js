@@ -4,27 +4,28 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as Notifications from "expo-notifications";
 import Constants from "expo-constants";
 import { useDispatch, useSelector } from "react-redux";
-import { Surface } from "react-native-paper";
+import { Surface, Title, Button } from "react-native-paper";
 
 import { setLastTimeCalledMom, addToCallHistoryAction } from "./momSlice";
 import { selectLastCalledTime, selectPhoneNumber } from "./selectors";
 import { call } from "./call";
 import moment from "moment";
 import { Footer } from "./Footer";
-import { boxShadow, colors } from "./Styles";
+import { boxShadow, colors, cornerRadius, header } from "./Styles";
 export const whenShouldYouCallYourMom = (lastCalledTime) => {
-  const thresholdDaysToCallMom = 7;
-  const daysSinceCalledMom = moment().diff(moment(lastCalledTime), "days");
+  return "7 days";
+  // const thresholdDaysToCallMom = 7;
+  // const daysSinceCalledMom = moment().diff(moment(lastCalledTime), "days");
 
-  // handle one day and today case
+  // // handle one day and today case
 
-  if (daysSinceCalledMom < thresholdDaysToCallMom) {
-    return `you should call your mom within ${
-      thresholdDaysToCallMom - daysSinceCalledMom
-    } days`;
-  } else {
-    return "You should call your mom";
-  }
+  // if (daysSinceCalledMom < thresholdDaysToCallMom) {
+  //   return `you should call your mom within ${
+  //     thresholdDaysToCallMom - daysSinceCalledMom
+  //   } days`;
+  // } else {
+  //   return "You should call your mom";
+  // }
 };
 
 export const Home = () => {
@@ -44,6 +45,10 @@ export const Home = () => {
   const callAndTrack = () => {
     call(phoneNumber);
     trackCallingMom();
+  };
+
+  const youLastCalledYourMom = () => {
+    return "You last called your mom " + moment(lastCalledTime).fromNow();
   };
   // const sendNotification = ({ token }) => {
   //   fetch("https://exp.host/--/api/v2/push/send", {
@@ -106,35 +111,65 @@ export const Home = () => {
         width: "100%",
       }}
     >
-      <Image
-        style={{ width: "100%", height: "50%" }}
-        source={require("./assets/PlaceholderMom.png")}
-      />
-      <Surface
-        style={{
-          elevation: 4,
-          width: "100%",
-          position: "absolute",
-          bottom: 0,
-          height: "55%",
-          backgroundColor: colors.white,
-          flex: 1,
-          padding: 20,
-          borderTopLeftRadius: 20,
-          borderTopRightRadius: 20,
-        }}
-      >
-        <Text>
-          {lastCalledTime
-            ? `You last called your mom at ${lastCalledTime}`
-            : "You haven't called your mom"}
-        </Text>
-        <Text>{whenShouldYouCallYourMom(lastCalledTime)}</Text>
-        <TouchableOpacity onPress={() => callAndTrack()}>
-          <Text>Call you momma!</Text>
-        </TouchableOpacity>
-        <Footer />
-      </Surface>
+      <View style={{ flex: 1 }}>
+        <Image
+          style={{ width: "100%", height: "50%" }}
+          source={require("./assets/PlaceholderMom.png")}
+        />
+        <Surface
+          style={{
+            elevation: 4,
+            width: "100%",
+            position: "relative",
+            bottom: 0,
+            height: "55%",
+            backgroundColor: colors.white,
+            flex: 1,
+            padding: 20,
+            borderTopLeftRadius: cornerRadius,
+            borderTopRightRadius: cornerRadius,
+            alignItems: "center",
+          }}
+        >
+          <Text style={{ width: "60%", textAlign: "center" }}>
+            {youLastCalledYourMom()}
+          </Text>
+          <View style={{ justifyContent: "center", alignItems: "center" }}>
+            <Image source={require("./assets/Calendar.png")} />
+            <View
+              style={{
+                position: "absolute",
+                justifyContent: "center",
+                alignItems: "center",
+                top: "40%",
+              }}
+            >
+              <Text>Call Mom In</Text>
+              <Title>{whenShouldYouCallYourMom(lastCalledTime)}</Title>
+            </View>
+          </View>
+
+          <Button
+            style={{
+              backgroundColor: colors.purple,
+              color: "white",
+              borderRadius: 50,
+              margin: 20,
+              width: "60%",
+              height: 50,
+              justifyContent: "center",
+            }}
+            mode={"contained"}
+            icon={"phone"}
+            onPress={() => callAndTrack()}
+            title={"Call Mom"}
+          >
+            Call Mom
+          </Button>
+        </Surface>
+      </View>
+
+      <Footer />
     </View>
   );
 };
