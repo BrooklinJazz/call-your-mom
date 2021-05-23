@@ -6,7 +6,7 @@ const momSlice = createSlice({
   name: "mom",
   initialState: {
     phoneNumber: undefined,
-    currentRoute: Routes.CallHistory,
+    currentRoute: Routes.Home,
     lastCalledTime: undefined,
     callHistory: [],
     momsBirthday: undefined,
