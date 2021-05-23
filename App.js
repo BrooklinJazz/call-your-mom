@@ -36,7 +36,14 @@ const call = (phoneNumber) => Linking.openURL(`tel:${phoneNumber}`);
 // Display an In-App view (you have 2 days to call your mom)
 // Push Notification for when it's been too long.
 
-const Settings = ({ setPhoneNumber, phoneNumber, saveAndNav }) => {
+const Settings = () => {
+  const setPhoneNumber = (phNumber) => dispatch(setMomsPhoneNumber(phNumber));
+  const phoneNumber = useSelector(selectPhoneNumber);
+  const setNav = (route) => dispatch(setNavigation(route));
+  const saveAndNav = () => {
+    setNav("Home");
+    AsyncStorage.setItem("phoneNumber", phoneNumber);
+  };
   return (
     <View>
       <Text>Settings</Text>
@@ -151,11 +158,6 @@ function CallYourMom() {
   const lastCalledTime = useSelector(selectLastCalledTime);
   const setLastCalledTime = (time) => dispatch(setLastTimeCalledMom(time));
 
-  const savePhoneNumberAndNext = () => {
-    setNav("Home");
-    AsyncStorage.setItem("phoneNumber", phoneNumber);
-  };
-
   const trackCallingMom = () => {
     const currentTime = new Date().toString();
     AsyncStorage.setItem("lastCalledTime", currentTime);
@@ -188,11 +190,7 @@ function CallYourMom() {
     <View style={styles.container}>
       <StatusBar style="auto" />
       {nav === "settings" || !phoneNumber ? (
-        <Settings
-          phoneNumber={phoneNumber}
-          setPhoneNumber={setPhoneNumber}
-          saveAndNav={savePhoneNumberAndNext}
-        />
+        <Settings />
       ) : (
         <Home callAndTrack={callAndTrack} lastCalledTime={lastCalledTime} />
       )}
