@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { Routes } from "./Navigation";
+import { Routes } from "./Routes";
 
 const momSlice = createSlice({
   name: "mom",

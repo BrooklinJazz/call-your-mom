@@ -4,12 +4,7 @@ import { selectNavigation as selectCurrentRoute } from "./selectors";
 import { Home } from "./Home";
 import { Setup } from "./Setup";
 import { Settings } from "./Settings";
-
-export const Routes = {
-  Settings: "Settings",
-  Home: "Home",
-  Setup: "Setup",
-};
+import { Routes } from "./Routes";
 
 export const Navigation = () => {
   const currentRoute = useSelector(selectCurrentRoute);

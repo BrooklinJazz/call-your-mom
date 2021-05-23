@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Text, TouchableOpacity, Platform } from "react-native";
+import { Text, TouchableOpacity, Platform, View } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as Notifications from "expo-notifications";
 import Constants from "expo-constants";
@@ -8,11 +8,38 @@ import { setLastTimeCalledMom } from "./momSlice";
 import { selectLastCalledTime, selectPhoneNumber } from "./selectors";
 import { call } from "./call";
 import moment from "moment";
-import { Ionicons } from "@expo/vector-icons";
+import { Entypo } from "@expo/vector-icons";
 const Footer = () => {
   return (
-    <View style={{ justifyContent: "space-between" }}>
-      <Ionicons name="phone" size={32} color="black" />
+    <View
+      style={{
+        justifyContent: "space-between",
+        flexDirection: "row",
+        alignItems: "center",
+        marginTop: "auto",
+        height: "15%",
+        width: "100%",
+        backgroundColor: "green",
+      }}
+    >
+      <Entypo
+        onPress={() => console.log("Touched")}
+        name="phone"
+        size={32}
+        color="black"
+      />
+      <Entypo
+        onPress={() => console.log("Touched")}
+        name="phone"
+        size={32}
+        color="black"
+      />
+      <Entypo
+        onPress={() => console.log("Touched")}
+        name="cog"
+        size={32}
+        color="black"
+      />
     </View>
   );
 };
@@ -104,7 +131,7 @@ export const Home = () => {
     registerForPushNotificationsAsync();
   }, []);
   return (
-    <>
+    <View style={{ height: "100%", width: "100%" }}>
       <Text>
         {lastCalledTime
           ? `You last called your mom at ${lastCalledTime}`
@@ -115,6 +142,6 @@ export const Home = () => {
         <Text>Call you momma!</Text>
       </TouchableOpacity>
       <Footer />
-    </>
+    </View>
   );
 };

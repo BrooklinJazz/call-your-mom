@@ -1,6 +1,6 @@
 import { StatusBar } from "expo-status-bar";
 import React, { useEffect } from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, SafeAreaView } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useDispatch } from "react-redux";
 import { setMomsPhoneNumber, setLastTimeCalledMom } from "./momSlice";
@@ -22,15 +22,17 @@ export function CallYourMom() {
       let time = await AsyncStorage.getItem("lastCalledTime");
       setLastCalledTime(time);
     }
+    
     setPhoneNumberAsStoredValue();
     fetchLastCalledTime();
   }, []);
 
   return (
-    <View style={styles.container}>
+    <>
       <StatusBar style="auto" />
       <Navigation />
-    </View>
+      <SafeAreaView />
+    </>
   );
 }
 
