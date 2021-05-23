@@ -21,7 +21,7 @@ export const Setup = () => {
   };
   return (
     <Wrapper>
-      <Text style={style.header}>Set up mom's information</Text>
+      <Text style={globalStyles.header}>Set up mom's information</Text>
       <Card>
         <View style={{ paddingHorizontal: 20, paddingVertical: 10 }}>
           <SettingsForm
@@ -43,7 +43,3 @@ export const Setup = () => {
     </Wrapper>
   );
 };
-
-const style = StyleSheet.create({
-  header: globalStyles.header,
-});
