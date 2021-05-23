@@ -1,9 +1,9 @@
 import React from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, ScrollView } from "react-native";
 import * as globalStyles from "../Styles";
 
 export default Card = ({ children }) => {
-  return <View style={styles.card}>{children}</View>;
+  return <ScrollView style={styles.card}>{children}</ScrollView>;
 };
 
 const styles = StyleSheet.create({
@@ -14,5 +14,6 @@ const styles = StyleSheet.create({
     height: "80%",
     width: "100%",
     borderRadius: globalStyles.cornerRadius,
+    paddingBottom: 20,
   },
 });

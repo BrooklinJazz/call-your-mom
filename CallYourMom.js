@@ -7,6 +7,10 @@ import { Onboarding } from "./Onboarding";
 import { selectPhoneNumber } from "./selectors";
 import * as globalStyles from "./Styles";
 import { persistor } from "./store";
+
+console.disableYellowBox = true;
+console.disableRedBox = true;
+
 export function CallYourMom() {
   const phoneNumber = useSelector(selectPhoneNumber);
   // persistor.purge();
