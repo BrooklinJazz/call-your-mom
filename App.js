@@ -51,13 +51,6 @@ const whenShouldYouCallYourMom = (lastCalledTime) => {
   }
 };
 
-/*
-curl -H "Content-Type: application/json" -X POST "https://exp.host/--/api/v2/push/send" -d '{
-  "to": "ExponentPushToken[btcg4ZJKWPxopV9xvNGLM9]",
-  "title":"FromApp",
-  "body": "world"
-}'
-*/
 
 const Home = ({ callAndTrack, lastCalledTime }) => {
   const [token, setToken] = useState();
@@ -76,13 +69,9 @@ const Home = ({ callAndTrack, lastCalledTime }) => {
         title: "From App",
         body: "World",
       }),
-    })
-      .then((res) => console.warn("RES", JSON.stringify(res)))
-      .catch((err) => console.log("ERR", JSON.stringify(err)));
+    });
   };
   const registerForPushNotificationsAsync = async () => {
-    console.warn("STARTING");
-    console.warn(Constants.isDevice);
     if (Constants.isDevice) {
       const { status: existingStatus } =
         await Notifications.getPermissionsAsync();
@@ -96,7 +85,6 @@ const Home = ({ callAndTrack, lastCalledTime }) => {
         return;
       }
       const token = (await Notifications.getExpoPushTokenAsync()).data;
-      console.log(token);
       setToken(token);
     } else {
       alert("Must use physical device for Push Notifications");
@@ -119,7 +107,6 @@ const Home = ({ callAndTrack, lastCalledTime }) => {
   }, [token]);
 
   useEffect(() => {
-    console.log("USE EFFECT");
     registerForPushNotificationsAsync();
   }, []);
   return (
