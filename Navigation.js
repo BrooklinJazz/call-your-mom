@@ -5,6 +5,7 @@ import { Home } from "./Home";
 import { Setup } from "./Setup";
 import { Settings } from "./Settings";
 import { Routes } from "./Routes";
+import { CallHistory } from "./CallHistory";
 
 export const Navigation = () => {
   const currentRoute = useSelector(selectCurrentRoute);
@@ -15,7 +16,9 @@ export const Navigation = () => {
       return <Settings />;
     case Routes.Home:
       return <Home />;
+    case Routes.CallHistory:
+      return <CallHistory />;
     default:
-      <View />;
+      throw new Error(`Unknown Route: ${currentRoute}`);
   }
 };

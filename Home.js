@@ -8,42 +8,7 @@ import { setLastTimeCalledMom } from "./momSlice";
 import { selectLastCalledTime, selectPhoneNumber } from "./selectors";
 import { call } from "./call";
 import moment from "moment";
-import { Entypo } from "@expo/vector-icons";
-const Footer = () => {
-  return (
-    <View
-      style={{
-        justifyContent: "space-between",
-        flexDirection: "row",
-        alignItems: "center",
-        marginTop: "auto",
-        height: "15%",
-        width: "100%",
-        backgroundColor: "green",
-      }}
-    >
-      <Entypo
-        onPress={() => console.log("Touched")}
-        name="phone"
-        size={32}
-        color="black"
-      />
-      <Entypo
-        onPress={() => console.log("Touched")}
-        name="phone"
-        size={32}
-        color="black"
-      />
-      <Entypo
-        onPress={() => console.log("Touched")}
-        name="cog"
-        size={32}
-        color="black"
-      />
-    </View>
-  );
-};
-
+import { Footer } from "./Footer";
 export const whenShouldYouCallYourMom = (lastCalledTime) => {
   const thresholdDaysToCallMom = 7;
   const daysSinceCalledMom = moment().diff(moment(lastCalledTime), "days");
