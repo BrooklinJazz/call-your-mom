@@ -5,6 +5,7 @@ const momSlice = createSlice({
   initialState: {
     phoneNumber: undefined,
     currentRoute: "settings",
+    lastCalledTime: undefined,
   },
   reducers: {
     setMomsPhoneNumber(state, action) {
@@ -13,9 +14,13 @@ const momSlice = createSlice({
     setNavigation(state, action) {
       state.currentRoute = action.payload;
     },
+    setLastTimeCalledMom(state, action) {
+      state.lastCalledTime = action.payload;
+    },
   },
 });
 
-export const { setMomsPhoneNumber, setNavigation } = momSlice.actions;
+export const { setMomsPhoneNumber, setNavigation, setLastTimeCalledMom } =
+  momSlice.actions;
 
 export default momSlice.reducer;

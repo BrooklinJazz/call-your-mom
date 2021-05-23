@@ -16,10 +16,18 @@ import * as Notifications from "expo-notifications";
 import Constants from "expo-constants";
 import Slider from "@react-native-community/slider";
 import { useDispatch, useSelector } from "react-redux";
-import { setMomsPhoneNumber, setNavigation } from "./momSlice";
+import {
+  setMomsPhoneNumber,
+  setNavigation,
+  setLastTimeCalledMom,
+} from "./momSlice";
 import { Provider } from "react-redux";
 import { store } from "./store";
-import { selectPhoneNumber, selectNavigation } from "./selectors";
+import {
+  selectPhoneNumber,
+  selectNavigation,
+  selectLastCalledTime,
+} from "./selectors";
 
 const call = (phoneNumber) => Linking.openURL(`tel:${phoneNumber}`);
 
@@ -140,7 +148,8 @@ function CallYourMom() {
   const nav = useSelector(selectNavigation);
   const setNav = (route) => dispatch(setNavigation(route));
 
-  const [lastCalledTime, setLastCalledTime] = useState();
+  const lastCalledTime = useSelector(selectLastCalledTime);
+  const setLastCalledTime = (time) => dispatch(setLastTimeCalledMom(time));
 
   const savePhoneNumberAndNext = () => {
     setNav("Home");
