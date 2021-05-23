@@ -19,6 +19,7 @@ export const Setup = () => {
     setNav(Routes.Home);
     AsyncStorage.setItem("phoneNumber", tempPhoneNumber);
   };
+
   return (
     <Wrapper>
       <Text style={globalStyles.header}>Set up mom's information</Text>
