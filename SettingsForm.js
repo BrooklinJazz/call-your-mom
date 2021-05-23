@@ -24,6 +24,7 @@ export const SettingsForm = () => {
       <View
         style={{
           ...styles.section,
+          ...styles.bottomBorder,
           flexDirection: "row",
           alignItems: "center",
           justifyContent: "space-between",
@@ -47,8 +48,10 @@ export const SettingsForm = () => {
       <View
         style={{
           ...styles.section,
+          ...styles.bottomBorder,
           flexDirection: "row",
           alignItems: "center",
+          justifyContent: "space-between",
         }}
       >
         <Image
@@ -61,8 +64,10 @@ export const SettingsForm = () => {
           source={require("./assets/edit.png")}
         />
       </View>
-      <View style={styles.section}>
-        <Text>How often do you want to call mom?</Text>
+      <View style={{ ...styles.section, ...styles.bottomBorder }}>
+        <Text style={styles.settingTitle}>
+          How often do you want to call mom?
+        </Text>
         <View style={{ flexDirection: "row" }}>
           <Text>Every</Text>
           <TextInput
@@ -73,15 +78,19 @@ export const SettingsForm = () => {
           <Text>day(s)</Text>
         </View>
       </View>
-      <View style={styles.section}>
-        <Text>Remind you to call mom on Mother's Day?</Text>
+      <View style={{ ...styles.section, ...styles.bottomBorder }}>
+        <Text style={styles.settingTitle}>
+          Remind you to call mom on Mother's Day?
+        </Text>
         <View style={{ flexDirection: "row" }}>
           <Button title={"YES"} onPress={() => {}} />
           <Button title={"NO"} onPress={() => {}} />
         </View>
       </View>
-      <View>
-        <Text>Remind you to call mom on her birthday?</Text>
+      <View style={styles.section}>
+        <Text style={styles.settingTitle}>
+          Remind you to call mom on her birthday?
+        </Text>
         <View style={{ flexDirection: "row" }}>
           <Button title={"YES"} onPress={() => {}} />
           <Button title={"NO"} onPress={() => {}} />
@@ -103,9 +112,19 @@ const styles = StyleSheet.create({
     ...globalStyles.textInput,
     height: 20,
     width: 40,
+    paddingLeft: 10,
+    paddingRight: 10,
+    marginHorizontal: 20,
   },
   section: {
+    paddingVertical: 15,
+  },
+  bottomBorder: {
     borderBottomWidth: 1,
     borderBottomColor: globalStyles.colors.lightGray,
+  },
+  settingTitle: {
+    fontFamily: globalStyles.fonts.bold,
+    fontSize: 18,
   },
 });

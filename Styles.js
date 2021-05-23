@@ -4,7 +4,8 @@ export const colors = {
   purple: "#724AF6",
   white: "#FFFFFF",
   black: "#000000",
-  lightGray: "#848484",
+  gray: "#848484",
+  lightGray: "#E5E5E5",
 };
 
 export const fonts = {
@@ -34,11 +35,18 @@ export const centerContents = {
 };
 
 export const textInput = {
-  color: colors.lightGray,
+  color: colors.gray,
   fontFamily: fonts.regular,
 };
 
 export const smallIcon = {
   height: 30,
   width: 30,
+};
+
+export const button = {
+  backgroundColor: colors.purple,
+  color: "white",
+  borderRadius: 50,
+  justifyContent: "center",
 };
