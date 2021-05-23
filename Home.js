@@ -114,16 +114,16 @@ export const Home = () => {
     >
       <View style={{ flex: 1 }}>
         <Image
-          style={{ width: "100%", height: "50%" }}
+          style={{ width: "100%", height: "60%" }}
           source={require("./assets/PlaceholderMom.png")}
         />
         <Surface
           style={{
             elevation: 4,
             width: "100%",
-            position: "relative",
+            position: "absolute",
             bottom: 0,
-            height: "55%",
+            height: "50%",
             backgroundColor: colors.white,
             flex: 1,
             padding: 20,
