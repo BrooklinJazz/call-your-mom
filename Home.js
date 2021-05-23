@@ -127,7 +127,7 @@ export const Home = () => {
             width: 60,
             height: 60,
             position: "absolute",
-            top: 300,
+            top: 330,
             left: 300,
             elevation: 20,
             flex: 1,
