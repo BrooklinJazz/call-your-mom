@@ -19,7 +19,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setMomsPhoneNumber, setNavigation } from "./momSlice";
 import { Provider } from "react-redux";
 import { store } from "./store";
-import { selectPhoneNumber } from "./selectors";
+import { selectPhoneNumber, selectNavigation } from "./selectors";
 
 const call = (phoneNumber) => Linking.openURL(`tel:${phoneNumber}`);
 
