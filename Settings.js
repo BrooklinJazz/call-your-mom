@@ -4,6 +4,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useDispatch, useSelector } from "react-redux";
 import { setMomsPhoneNumber, setNavigation } from "./momSlice";
 import { selectPhoneNumber } from "./selectors";
+import { Routes } from "./Navigation";
 
 export const Settings = () => {
   const dispatch = useDispatch();
@@ -11,7 +12,7 @@ export const Settings = () => {
   const phoneNumber = useSelector(selectPhoneNumber);
   const setNav = (route) => dispatch(setNavigation(route));
   const saveAndNav = () => {
-    setNav("Home");
+    setNav(Routes.Home);
     AsyncStorage.setItem("phoneNumber", phoneNumber);
   };
   return (

@@ -4,12 +4,17 @@ import { selectNavigation as selectCurrentRoute } from "./selectors";
 import { Settings } from "./Settings";
 import { Home } from "./Home";
 
+export const Routes = {
+Settings: "Settings",
+Home: "Home"
+}
+
 export const Navigation = () => {
   const currentRoute = useSelector(selectCurrentRoute);
   switch (currentRoute) {
-    case "settings":
+    case Routes.Settings:
       return <Settings />;
-    case "Home":
+    case Routes.Home:
       return <Home />;
     default:
       break;

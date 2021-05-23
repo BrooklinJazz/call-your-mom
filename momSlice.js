@@ -1,10 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { Routes } from "./Navigation";
 
 const momSlice = createSlice({
   name: "mom",
   initialState: {
     phoneNumber: undefined,
-    currentRoute: "settings",
+    currentRoute: Routes.Settings,
     lastCalledTime: undefined,
   },
   reducers: {
