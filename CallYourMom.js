@@ -16,6 +16,7 @@ import { getStoredPhoneNumber } from "./getStoredPhoneNumber";
 import { StorageKeys } from "./StorageKeys";
 import { selectPhoneNumber } from "./selectors";
 import { Onboarding } from "./Onboarding";
+import { Setup } from "./Setup";
 
 export function CallYourMom() {
   const phoneNumber = useSelector(selectPhoneNumber);
@@ -50,7 +51,8 @@ export function CallYourMom() {
     <>
       <StatusBar style="auto" />
       <SafeAreaView style={styles.container}>
-        {phoneNumber ? <Navigation /> : <Onboarding />}
+        {/* {phoneNumber ? <Navigation /> : <Onboarding />} */}
+        <Setup />
       </SafeAreaView>
     </>
   );

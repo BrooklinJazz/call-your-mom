@@ -8,14 +8,11 @@ export default Card = ({ children }) => {
 
 const styles = StyleSheet.create({
   card: {
-    ...globalStyles.centerContents,
     ...globalStyles.boxShadow,
     backgroundColor: globalStyles.colors.white,
     color: globalStyles.colors.black,
-    height: "90%",
-    width: "90%",
+    height: "80%",
+    width: "100%",
     borderRadius: globalStyles.cornerRadius,
-    paddingHorizontal: 10,
-    paddingVertical: 10,
   },
 });

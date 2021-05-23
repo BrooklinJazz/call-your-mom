@@ -2,20 +2,7 @@ import React, { useState } from "react";
 import { Image, TouchableOpacity, View } from "react-native";
 import { Title } from "react-native-paper";
 import { Setup } from "./Setup";
-import { IconButton } from "react-native-paper";
-import { colors } from "./Styles";
-
-const NextButton = (props) => {
-  return (
-    <IconButton
-      size={50}
-      style={{ backgroundColor: colors.purple }}
-      color="white"
-      icon={"chevron-right"}
-      {...props}
-    />
-  );
-};
+import { NextButton } from "./components/NextButton";
 
 const Welcome = ({ onNext }) => {
   return (

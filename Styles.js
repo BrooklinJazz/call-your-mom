@@ -4,6 +4,9 @@ export const colors = {
   purple: "#724AF6",
   white: "#FFFFFF",
   black: "#000000",
+  gray: "#848484",
+  lightGray: "#E5E5E5",
+  medGray: "#C4C4C4",
 };
 
 export const fonts = {
@@ -23,11 +26,28 @@ export const cornerRadius = 20;
 export const header = {
   fontSize: 30,
   fontFamily: fonts.bold,
-  paddingVertical: 30,
+  paddingBottom: 30,
 };
 
 export const centerContents = {
   flex: 1,
   alignItems: "center",
+  justifyContent: "center",
+};
+
+export const textInput = {
+  color: colors.gray,
+  fontFamily: fonts.regular,
+};
+
+export const smallIcon = {
+  height: 30,
+  width: 30,
+};
+
+export const button = {
+  backgroundColor: colors.purple,
+  color: colors.white,
+  borderRadius: 50,
   justifyContent: "center",
 };

@@ -11,7 +11,7 @@ import { selectLastCalledTime, selectPhoneNumber } from "./selectors";
 import { call } from "./call";
 import moment from "moment";
 import { Footer } from "./Footer";
-import { boxShadow, colors, cornerRadius, header } from "./Styles";
+import { boxShadow, colors, cornerRadius, header, button } from "./Styles";
 export const whenShouldYouCallYourMom = (lastCalledTime) => {
   return "7 days";
   // const thresholdDaysToCallMom = 7;
@@ -151,13 +151,10 @@ export const Home = () => {
 
           <Button
             style={{
-              backgroundColor: colors.purple,
-              color: "white",
-              borderRadius: 50,
+              ...button,
               margin: 20,
               width: "60%",
               height: 50,
-              justifyContent: "center",
             }}
             mode={"contained"}
             icon={"phone"}
