@@ -157,6 +157,7 @@ export const Home = () => {
             borderTopLeftRadius: cornerRadius,
             borderTopRightRadius: cornerRadius,
             alignItems: "center",
+            justifyContent: "space-between",
           }}
         >
           <Text style={{ width: "60%", textAlign: "center" }}>

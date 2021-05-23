@@ -21,8 +21,10 @@ export const Settings = () => {
   return (
     <>
       <Wrapper>
-        <Text style={header}>Set up mom's information</Text>
-        <Card>
+        <Text style={{ ...header, paddingBottom: 0 }}>
+          Set up mom's information
+        </Text>
+        <Card height={"90%"}>
           <View style={{ paddingHorizontal: 20, paddingVertical: 10 }}>
             <SettingsForm
               onBlurPhoneNumber={() => {
