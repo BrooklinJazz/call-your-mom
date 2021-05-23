@@ -6,11 +6,11 @@ import { selectCallHistory } from "./selectors";
 export const CallHistory = () => {
   const callHistory = useSelector(selectCallHistory);
   return (
-    <>
-      {callHistory.map((each) => (
-        <Text key={each}>{each}</Text>
+    <View style={{ width: "100%" }}>
+      {callHistory.map((each, i) => (
+        <Text key={i}>{each}</Text>
       ))}
       <Footer />
-    </>
+    </View>
   );
 };

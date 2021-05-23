@@ -4,7 +4,11 @@ import { View, StyleSheet, SafeAreaView, Text } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { useDispatch, useSelector } from "react-redux";
-import { setMomsPhoneNumber, setLastTimeCalledMom } from "./momSlice";
+import {
+  setMomsPhoneNumber,
+  setLastTimeCalledMom,
+  setCallHistoryAction,
+} from "./momSlice";
 import { Navigation } from "./Navigation";
 import * as globalStyles from "./Styles";
 
@@ -15,15 +19,13 @@ import { selectPhoneNumber } from "./selectors";
 import { Setup } from "./Setup";
 
 export function CallYourMom() {
-  if (!StorageKeys || !Routes) {
-    console.warn(StorageKeys, Routes);
-    return <Text>Loading</Text>;
-  }
   const phoneNumber = useSelector(selectPhoneNumber);
 
   const dispatch = useDispatch();
   const setPhoneNumber = (phNumber) => dispatch(setMomsPhoneNumber(phNumber));
   const setLastCalledTime = (time) => dispatch(setLastTimeCalledMom(time));
+  const setCallHistory = (callHistory) =>
+    dispatch(setCallHistoryAction(callHistory));
 
   useEffect(function loadInitialData() {
     async function setPhoneNumberAsStoredValue() {
@@ -34,6 +36,11 @@ export function CallYourMom() {
       let time = await AsyncStorage.getItem(StorageKeys.lastCallTime);
       setLastCalledTime(time);
     }
+    async function fetchCallHistory() {
+      let callHistory = await AsyncStorage.getItem(StorageKeys.callHistory);
+      setCallHistory(callHistory || []);
+    }
+    fetchCallHistory();
     setPhoneNumberAsStoredValue();
     fetchLastCalledTime();
   }, []);
@@ -42,8 +49,7 @@ export function CallYourMom() {
     <>
       <StatusBar style="auto" />
       <View style={styles.container}>
-        {/* {phoneNumber ? <Navigation /> : <Setup />} */}
-        <Setup />
+        {phoneNumber ? <Navigation /> : <Setup />}
       </View>
     </>
   );
