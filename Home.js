@@ -33,7 +33,6 @@ export const Home = () => {
 
   const trackCallingMom = () => {
     const currentTime = new Date().toString();
-    AsyncStorage.setItem("lastCalledTime", currentTime);
     setLastCalledTime(currentTime);
   };
 
@@ -96,7 +95,14 @@ export const Home = () => {
     registerForPushNotificationsAsync();
   }, []);
   return (
-    <View style={{ height: "100%", width: "100%" }}>
+    <View
+      style={{
+        height: "100%",
+        width: "100%",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
       <Text>
         {lastCalledTime
           ? `You last called your mom at ${lastCalledTime}`

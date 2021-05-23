@@ -14,7 +14,7 @@ export const Footer = () => {
         justifyContent: "space-around",
         flexDirection: "row",
         alignItems: "center",
-        marginTop: "auto",
+        justifySelf: "flex-end",
         height: "15%",
         width: "100%",
       }}

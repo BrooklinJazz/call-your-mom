@@ -4,14 +4,16 @@ import { selectNavigation as selectCurrentRoute } from "./selectors";
 import { Home } from "./Home";
 import { Setup } from "./Setup";
 import { Settings } from "./Settings";
-import { Routes } from "./Routes";
 import { CallHistory } from "./CallHistory";
-
+const Routes = {
+  Settings: "Settings",
+  Home: "Home",
+  CallHistory: "CallHistory",
+};
 export const Navigation = () => {
   const currentRoute = useSelector(selectCurrentRoute);
+
   switch (currentRoute) {
-    case Routes.Setup:
-      return <Setup />;
     case Routes.Settings:
       return <Settings />;
     case Routes.Home:
