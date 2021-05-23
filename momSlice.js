@@ -5,7 +5,7 @@ import { StorageKeys } from "./StorageKeys";
 const momSlice = createSlice({
   name: "mom",
   initialState: {
-    phoneNumber: "7789845299",
+    phoneNumber: undefined,
     currentRoute: Routes.Home,
     lastCalledTime: undefined,
     callHistory: [],

@@ -1,18 +1,43 @@
-import { configureStore } from '@reduxjs/toolkit';
-import momReducer from './momSlice';
+import {
+  combineReducers,
+  configureStore,
+  getDefaultMiddleware,
+} from "@reduxjs/toolkit";
+import momReducer from "./momSlice";
 
-export const store = configureStore({
-  reducer: {
-    momReducer: momReducer
-  }
+import {
+  persistStore,
+  persistReducer,
+  FLUSH,
+  REHYDRATE,
+  PAUSE,
+  PERSIST,
+  PURGE,
+  REGISTER,
+} from "redux-persist";
+
+import storage from "redux-persist/lib/storage";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
+const persistConfig = {
+  key: "root",
+  version: 1,
+  storage: AsyncStorage,
+};
+
+const rootReducer = combineReducers({
+  momReducer: momReducer,
 });
 
-// store -> global state
+const persistedReducer = persistReducer(persistConfig, rootReducer);
 
-// actions -> type, payload
-// store -> change store values (setters/getters)
-// slice -> syntax sugar -> actions/reducers
+export const store = configureStore({
+  reducer: persistedReducer,
+  middleware: getDefaultMiddleware({
+    serializableCheck: {
+      ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+    },
+  }),
+});
 
-//actions is like a message (type: "actionA", payload: "8888888888")
-// reducer is like a listener (type: "actionA", payload) -> phoneNumber = payload
-
+export const persistor = persistStore(store);
