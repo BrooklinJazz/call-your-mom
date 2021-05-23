@@ -27,25 +27,26 @@ export function CallYourMom() {
   const setCallHistory = (callHistory) =>
     dispatch(setCallHistoryAction(callHistory));
 
-  useEffect(function loadInitialData() {
-    async function setPhoneNumberAsStoredValue() {
-      const storedNumber = await getStoredPhoneNumber();
-      setPhoneNumber(storedNumber);
-    }
-    async function fetchLastCalledTime() {
-      let time = await AsyncStorage.getItem(StorageKeys.lastCallTime);
-      setLastCalledTime(time);
-    }
-    async function fetchCallHistory() {
-      let callHistory = await AsyncStorage.getItem(StorageKeys.callHistory);
-      if (callHistory) {
-        setCallHistory(JSON.parse(callHistory));
-      }
-    }
-    fetchCallHistory();
-    setPhoneNumberAsStoredValue();
-    fetchLastCalledTime();
-  }, []);
+  // useEffect(function loadInitialData() {
+  //   AsyncStorage.clear();
+  //   async function setPhoneNumberAsStoredValue() {
+  //     const storedNumber = await getStoredPhoneNumber();
+  //     setPhoneNumber(storedNumber);
+  //   }
+  //   async function fetchLastCalledTime() {
+  //     let time = await AsyncStorage.getItem(StorageKeys.lastCallTime);
+  //     setLastCalledTime(time);
+  //   }
+  //   async function fetchCallHistory() {
+  //     let callHistory = await AsyncStorage.getItem(StorageKeys.callHistory);
+  //     if (callHistory) {
+  //       setCallHistory(JSON.parse(callHistory));
+  //     }
+  //   }
+  //   fetchCallHistory();
+  //   setPhoneNumberAsStoredValue();
+  //   fetchLastCalledTime();
+  // }, []);
 
   return (
     <>

@@ -1,5 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { Text, TouchableOpacity, Platform, View, Image } from "react-native";
+import {
+  Text,
+  TouchableOpacity,
+  Platform,
+  View,
+  Image,
+  TouchableWithoutFeedback,
+} from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as Notifications from "expo-notifications";
 import Constants from "expo-constants";
@@ -37,26 +44,27 @@ export const Home = () => {
     trackCallingMom();
   };
 
+  const lastCalledTime = lastCalledTimeDate && moment(lastCalledTimeDate);
   const daysSinceLastCalled = moment().diff(lastCalledTime, "days");
-  const lastCalledTime = moment(lastCalledTimeDate);
   const isUpcomingCall = daysSinceLastCalled <= frequencyToCallMomInDays;
   const isOutstandingCall = !isUpcomingCall;
   const outstandingDaysSinceCalling =
     daysSinceLastCalled - frequencyToCallMomInDays;
-  const whenShouldYouCallYourMom = () => {
-    const daysUntilCall = frequencyToCallMomInDays - daysSinceLastCalled;
-    if (isUpcomingCall && daysUntilCall === 0) {
-      return "today";
-    } else if (isUpcomingCall && daysUntilCall === 1) {
-      return "1 day";
-    } else if (isUpcomingCall) {
-      return daysUntilCall + " days";
-    } else if (isOutstandingCall && outstandingDaysSinceCalling === 1) {
-      return "1 day";
-    } else if (isOutstandingCall) {
-      return outstandingDaysSinceCalling + " days";
-    }
-  };
+
+  let whenShouldYouCallYourMom;
+  const daysUntilCall = frequencyToCallMomInDays - daysSinceLastCalled;
+
+  if (isUpcomingCall && daysUntilCall === 0) {
+    whenShouldYouCallYourMom = "today";
+  } else if (isUpcomingCall && daysUntilCall === 1) {
+    whenShouldYouCallYourMom = "1 day";
+  } else if (isUpcomingCall) {
+    whenShouldYouCallYourMom = daysUntilCall + " days";
+  } else if (isOutstandingCall && outstandingDaysSinceCalling === 1) {
+    whenShouldYouCallYourMom = "1 day";
+  } else if (isOutstandingCall) {
+    whenShouldYouCallYourMom = outstandingDaysSinceCalling + " days";
+  }
 
   const youLastCalledYourMom = () => {
     return (
@@ -148,24 +156,32 @@ export const Home = () => {
           <Text style={{ width: "60%", textAlign: "center" }}>
             {youLastCalledYourMom()}
           </Text>
-          <View style={{ justifyContent: "center", alignItems: "center" }}>
-            <Image source={require("./assets/Calendar.png")} />
-            <View
-              style={{
-                position: "absolute",
-                justifyContent: "center",
-                alignItems: "center",
-                top: "40%",
-              }}
-            >
-              {isUpcomingCall ? (
-                <Text>Upcoming Call</Text>
-              ) : (
-                <Text style={{ color: "red" }}>Outstanding Call</Text>
-              )}
-              <Title>{whenShouldYouCallYourMom()}</Title>
+          <TouchableWithoutFeedback
+            onPress={() =>
+              setLastCalledTime(
+                moment().subtract(7, "days").toDate().toString()
+              )
+            }
+          >
+            <View style={{ justifyContent: "center", alignItems: "center" }}>
+              <Image source={require("./assets/Calendar.png")} />
+              <View
+                style={{
+                  position: "absolute",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  top: "40%",
+                }}
+              >
+                {isUpcomingCall ? (
+                  <Text>Upcoming Call</Text>
+                ) : (
+                  <Text style={{ color: "red" }}>Outstanding Call</Text>
+                )}
+                <Title>{whenShouldYouCallYourMom}</Title>
+              </View>
             </View>
-          </View>
+          </TouchableWithoutFeedback>
 
           <Button
             style={{

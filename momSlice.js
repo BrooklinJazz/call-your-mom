@@ -5,14 +5,14 @@ import { StorageKeys } from "./StorageKeys";
 const momSlice = createSlice({
   name: "mom",
   initialState: {
-    phoneNumber: undefined,
+    phoneNumber: "7789845299",
     currentRoute: Routes.Home,
     lastCalledTime: undefined,
     callHistory: [],
     momsBirthday: undefined,
     shouldNotifyMomOnBirthday: false,
     shouldNotifyMomOnMothersDay: false,
-    frequencyToCallMomInDays: undefined,
+    frequencyToCallMomInDays: "7",
   },
   reducers: {
     setMomsPhoneNumber(state, action) {
@@ -34,7 +34,7 @@ const momSlice = createSlice({
       state.currentRoute = action.payload;
     },
     setLastTimeCalledMom(state, action) {
-      AsyncStorage.setItem(StorageKeys.lastCallTime, action.payload);
+      // AsyncStorage.setItem(StorageKeys.lastCallTime, action.payload);
 
       state.lastCalledTime = action.payload;
     },
@@ -43,10 +43,10 @@ const momSlice = createSlice({
         (each) => !!each
       );
 
-      AsyncStorage.setItem(
-        StorageKeys.callHistory,
-        JSON.stringify(newCallHistory)
-      );
+      // AsyncStorage.setItem(
+      //   StorageKeys.callHistory,
+      //   JSON.stringify(newCallHistory)
+      // );
 
       state.callHistory = newCallHistory;
     },
@@ -65,7 +65,7 @@ export const {
   setMomsBirthdayAction,
   setShouldNotifyMomOnBirthdayAction,
   setShouldNotifyMomOnMothersDayAction,
-  setFrequencyToCallMomInDaysAction
+  setFrequencyToCallMomInDaysAction,
 } = momSlice.actions;
 
 export default momSlice.reducer;
