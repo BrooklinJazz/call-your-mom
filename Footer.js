@@ -6,7 +6,7 @@ import { Entypo } from "@expo/vector-icons";
 import { Routes } from "./Routes";
 import { Surface } from "react-native-paper";
 import { selectNavigation as selectCurrentRoute } from "./selectors";
-
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 export const Footer = () => {
   const dispatch = useDispatch();
   const navigate = (route) => dispatch(setNavigation(route));
@@ -23,9 +23,12 @@ export const Footer = () => {
   const settingsIcon = isOn(Routes.Settings)
     ? require("./assets/settingOn.png")
     : require("./assets/settingOff.png");
+
+  const { bottom } = useSafeAreaInsets();
   return (
     <Surface
       style={{
+        paddingBottom: bottom,
         elevation: 12,
         justifyContent: "space-around",
         flexDirection: "row",

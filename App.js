@@ -8,7 +8,7 @@ import {
   Poppins_400Regular,
   Poppins_700Bold,
 } from "@expo-google-fonts/poppins";
-
+import { SafeAreaProvider } from "react-native-safe-area-context";
 export default function App() {
   const [fontsLoaded] = useFonts({ Poppins_400Regular, Poppins_700Bold });
 
@@ -16,9 +16,11 @@ export default function App() {
     return <AppLoading />;
   } else {
     return (
-      <Provider store={store}>
-        <CallYourMom />
-      </Provider>
+      <SafeAreaProvider>
+        <Provider store={store}>
+          <CallYourMom />
+        </Provider>
+      </SafeAreaProvider>
     );
   }
 }

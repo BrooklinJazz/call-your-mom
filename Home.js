@@ -12,6 +12,7 @@ import { call } from "./call";
 import moment from "moment";
 import { Footer } from "./Footer";
 import { boxShadow, colors, cornerRadius, header, button } from "./Styles";
+
 export const whenShouldYouCallYourMom = (lastCalledTime) => {
   return "7 days";
   // const thresholdDaysToCallMom = 7;
