@@ -11,6 +11,6 @@ const style = StyleSheet.create({
     ...globalStyles.centerContents,
     height: "100%",
     width: "100%",
-    paddingLeft: 20,
+    paddingHorizontal: 20,
   },
 });
