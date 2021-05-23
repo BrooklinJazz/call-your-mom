@@ -11,4 +11,11 @@ export const fonts = {
   bold: "Poppins_700Bold",
 };
 
-export const dropShadow = "4 4 7 0 #724AF6";
+export const boxShadow = {
+  shadowOffset: { width: 4, height: 4 },
+  shadowColor: colors.purple,
+  shadowOpacity: 0.2,
+  shadowRadius: 7,
+};
+
+export const cornerRadius = 20;
