@@ -1,7 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { selectNavigation as selectCurrentRoute } from "./selectors";
-import { SettingsForm } from "./SettingsForm";
 import { Home } from "./Home";
 
 export const Routes = {
