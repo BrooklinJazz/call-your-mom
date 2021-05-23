@@ -5,6 +5,18 @@ import { Setup } from "./Setup";
 import { IconButton } from "react-native-paper";
 import { colors } from "./Styles";
 
+const NextButton = (props) => {
+  return (
+    <IconButton
+      size={50}
+      style={{ backgroundColor: colors.purple }}
+      color="white"
+      icon={"chevron-right"}
+      {...props}
+    />
+  );
+};
+
 const Welcome = ({ onNext }) => {
   return (
     <View
@@ -20,13 +32,7 @@ const Welcome = ({ onNext }) => {
       <Title style={{ width: "40%", textAlign: "center" }}>
         Helping you keep in contact with your mom
       </Title>
-      <IconButton
-        onPress={onNext}
-        size={50}
-        style={{ backgroundColor: colors.purple }}
-        color="white"
-        icon={"chevron-right"}
-      />
+      <NextButton onPress={onNext} />
     </View>
   );
 };
