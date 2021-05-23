@@ -30,7 +30,7 @@ export const whenShouldYouCallYourMom = (lastCalledTime) => {
 
 export const Home = () => {
   const dispatch = useDispatch();
-  const [token, setToken] = useState();
+  // const [token, setToken] = useState();
   const lastCalledTime = useSelector(selectLastCalledTime);
   const setLastCalledTime = (time) => dispatch(setLastTimeCalledMom(time));
   const addToCallHistory = (time) => dispatch(addToCallHistoryAction(time));

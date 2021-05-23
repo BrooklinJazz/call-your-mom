@@ -8,6 +8,7 @@ import {
   setNavigation,
   setShouldNotifyMomOnMothersDayAction,
   setShouldNotifyMomOnBirthdayAction,
+  setMomsBirthdayAction,
 } from "./momSlice";
 import {
   selectPhoneNumber,
@@ -18,7 +19,7 @@ import {
 import { Routes } from "./Routes";
 import * as globalStyles from "./Styles";
 
-export const SettingsForm = () => {
+export const SettingsForm = ({ tempPhoneNumber, setTempPhoneNumber }) => {
   const [callInterval, setCallInterval] = useState("1");
 
   const setRemindOnMothersDay = (shouldRemind) =>
@@ -27,18 +28,13 @@ export const SettingsForm = () => {
   const setRemindOnBirthday = (shouldRemind) =>
     dispatch(setShouldNotifyMomOnBirthdayAction(shouldRemind));
 
+  const setMomsBirthday = (date) => dispatch(setMomsBirthdayAction(date));
+
   const momsBirthday = useSelector(selectMomsBirthday);
   const remindOnBirthday = useSelector(selectShouldNotifyMomOnBirthday);
   const remindOnMothersDay = useSelector(selectShouldNotifyMomOnMothersDay);
 
   const dispatch = useDispatch();
-  const setPhoneNumber = (phNumber) => dispatch(setMomsPhoneNumber(phNumber));
-  const phoneNumber = useSelector(selectPhoneNumber);
-  const setNav = (route) => dispatch(setNavigation(route));
-  const saveAndNav = () => {
-    setNav(Routes.Home);
-    AsyncStorage.setItem("phoneNumber", phoneNumber);
-  };
 
   const getActiveColor = (isActive) =>
     isActive ? globalStyles.colors.purple : globalStyles.colors.medGray;
@@ -59,8 +55,8 @@ export const SettingsForm = () => {
           source={require("./assets/phone.png")}
         />
         <TextInput
-          onChangeText={setPhoneNumber}
-          value={phoneNumber}
+          onChangeText={setTempPhoneNumber}
+          value={tempPhoneNumber}
           style={styles.input}
           placeholder={"e.g. 123-456-7890"}
         />
@@ -82,7 +78,12 @@ export const SettingsForm = () => {
           style={globalStyles.smallIcon}
           source={require("./assets/birthday.png")}
         />
-        <TextInput style={styles.input} placeholder={"e.g. 05/21/1965"} />
+        <TextInput
+          style={styles.input}
+          onChangeText={setMomsBirthday}
+          value={momsBirthday}
+          placeholder={"e.g. 05/21/1965"}
+        />
         <Image
           style={globalStyles.smallIcon}
           source={require("./assets/edit.png")}
@@ -156,7 +157,6 @@ export const SettingsForm = () => {
           </Button>
         </View>
       </View>
-      <Button title={"SAVE"} onPress={() => saveAndNav()} />
     </View>
   );
 };
