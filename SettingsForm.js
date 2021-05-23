@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { Text, View, TextInput, Button, StyleSheet, Image } from "react-native";
+import { Text, View, TextInput, StyleSheet, Image } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { Surface, Title, Button } from "react-native-paper";
 import { useDispatch, useSelector } from "react-redux";
-
 import { setMomsPhoneNumber, setNavigation } from "./momSlice";
 import { selectPhoneNumber } from "./selectors";
 import { Routes } from "./Routes";
@@ -10,6 +10,9 @@ import * as globalStyles from "./Styles";
 
 export const SettingsForm = () => {
   const [callInterval, setCallInterval] = useState("1");
+  const [remindOnMothersDay, setRemindOnMothersDay] = useState(false);
+  const [remindOnBirthday, setRemindOnBirthday] = useState(true);
+
   const dispatch = useDispatch();
   const setPhoneNumber = (phNumber) => dispatch(setMomsPhoneNumber(phNumber));
   const phoneNumber = useSelector(selectPhoneNumber);
@@ -18,6 +21,9 @@ export const SettingsForm = () => {
     setNav(Routes.Home);
     AsyncStorage.setItem("phoneNumber", phoneNumber);
   };
+
+  const getActiveColor = (isActive) =>
+    isActive ? globalStyles.colors.purple : globalStyles.colors.medGray;
 
   return (
     <View>
@@ -82,18 +88,54 @@ export const SettingsForm = () => {
         <Text style={styles.settingTitle}>
           Remind you to call mom on Mother's Day?
         </Text>
-        <View style={{ flexDirection: "row" }}>
-          <Button title={"YES"} onPress={() => {}} />
-          <Button title={"NO"} onPress={() => {}} />
+        <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+          <Button
+            style={{
+              ...styles.button,
+              backgroundColor: getActiveColor(remindOnMothersDay),
+            }}
+            mode={"contained"}
+            onPress={() => setRemindOnMothersDay(true)}
+          >
+            Yes
+          </Button>
+          <Button
+            style={{
+              ...styles.button,
+              backgroundColor: getActiveColor(!remindOnMothersDay),
+            }}
+            mode={"contained"}
+            onPress={() => setRemindOnMothersDay(false)}
+          >
+            No
+          </Button>
         </View>
       </View>
       <View style={styles.section}>
         <Text style={styles.settingTitle}>
           Remind you to call mom on her birthday?
         </Text>
-        <View style={{ flexDirection: "row" }}>
-          <Button title={"YES"} onPress={() => {}} />
-          <Button title={"NO"} onPress={() => {}} />
+        <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+          <Button
+            style={{
+              ...styles.button,
+              backgroundColor: getActiveColor(remindOnBirthday),
+            }}
+            mode={"contained"}
+            onPress={() => setRemindOnBirthday(true)}
+          >
+            Yes
+          </Button>
+          <Button
+            style={{
+              ...styles.button,
+              backgroundColor: getActiveColor(!remindOnBirthday),
+            }}
+            mode={"contained"}
+            onPress={() => setRemindOnBirthday(false)}
+          >
+            No
+          </Button>
         </View>
       </View>
       <Button title={"SAVE"} onPress={() => saveAndNav()} />
@@ -126,5 +168,10 @@ const styles = StyleSheet.create({
   settingTitle: {
     fontFamily: globalStyles.fonts.bold,
     fontSize: 18,
+  },
+  button: {
+    ...globalStyles.button,
+    height: 35,
+    width: 105,
   },
 });

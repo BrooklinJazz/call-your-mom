@@ -6,6 +6,7 @@ export const colors = {
   black: "#000000",
   gray: "#848484",
   lightGray: "#E5E5E5",
+  medGray: "#C4C4C4",
 };
 
 export const fonts = {
@@ -46,7 +47,7 @@ export const smallIcon = {
 
 export const button = {
   backgroundColor: colors.purple,
-  color: "white",
+  color: colors.white,
   borderRadius: 50,
   justifyContent: "center",
 };

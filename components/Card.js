@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
     height: "90%",
     width: "90%",
     borderRadius: globalStyles.cornerRadius,
-    paddingHorizontal: 10,
+    paddingHorizontal: 20,
     paddingVertical: 10,
   },
 });
