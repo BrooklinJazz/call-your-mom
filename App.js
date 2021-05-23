@@ -62,7 +62,7 @@ curl -H "Content-Type: application/json" -X POST "https://exp.host/--/api/v2/pus
 const Home = ({ callAndTrack, lastCalledTime }) => {
   const [token, setToken] = useState();
 
-  const sendNotification = () => {
+  const sendNotification = ({ token }) => {
     fetch("https://exp.host/--/api/v2/push/send", {
       method: "POST",
       headers: {
@@ -72,14 +72,16 @@ const Home = ({ callAndTrack, lastCalledTime }) => {
         "content-type": "application/json",
       },
       body: JSON.stringify({
-        to: "",
+        to: token,
         title: "From App",
         body: "World",
       }),
-    }).then((res) => console.log(res));
+    })
+      .then((res) => console.warn("RES", JSON.stringify(res)))
+      .catch((err) => console.log("ERR", JSON.stringify(err)));
   };
   const registerForPushNotificationsAsync = async () => {
-    console.log("STARTING");
+    console.warn("STARTING");
     console.warn(Constants.isDevice);
     if (Constants.isDevice) {
       const { status: existingStatus } =
@@ -112,7 +114,7 @@ const Home = ({ callAndTrack, lastCalledTime }) => {
 
   useEffect(() => {
     if (token) {
-      sendNotification();
+      sendNotification({ token });
     }
   }, [token]);
 
