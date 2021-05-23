@@ -19,7 +19,7 @@ import {
   selectFrequencyToCallMomInDays,
 } from "./selectors";
 import * as globalStyles from "./Styles";
-
+import { MaskedTextInput } from "react-native-mask-text";
 export const SettingsForm = ({ tempPhoneNumber, setTempPhoneNumber }) => {
   const setRemindOnMothersDay = (shouldRemind) =>
     dispatch(setShouldNotifyMomOnMothersDayAction(shouldRemind));
@@ -35,7 +35,6 @@ export const SettingsForm = ({ tempPhoneNumber, setTempPhoneNumber }) => {
   const remindOnBirthday = useSelector(selectShouldNotifyMomOnBirthday);
   const remindOnMothersDay = useSelector(selectShouldNotifyMomOnMothersDay);
   const frequencyToCallMomInDays = useSelector(selectFrequencyToCallMomInDays);
-
   const dispatch = useDispatch();
 
   const getActiveColor = (isActive) =>
@@ -56,7 +55,9 @@ export const SettingsForm = ({ tempPhoneNumber, setTempPhoneNumber }) => {
           style={globalStyles.smallIcon}
           source={require("./assets/phone.png")}
         />
-        <TextInput
+        <MaskedTextInput
+          keyboardType="number-pad"
+          mask={"999-999-9999"}
           onChangeText={setTempPhoneNumber}
           value={tempPhoneNumber}
           style={styles.input}
@@ -80,7 +81,9 @@ export const SettingsForm = ({ tempPhoneNumber, setTempPhoneNumber }) => {
           style={globalStyles.smallIcon}
           source={require("./assets/birthday.png")}
         />
-        <TextInput
+        <MaskedTextInput
+          keyboardType="number-pad"
+          mask={"99/99/9999"}
           style={styles.input}
           onChangeText={setMomsBirthday}
           value={momsBirthday}
@@ -95,10 +98,11 @@ export const SettingsForm = ({ tempPhoneNumber, setTempPhoneNumber }) => {
         <Text style={styles.settingTitle}>
           How often do you want to call mom?
         </Text>
-        <View style={{ flexDirection: "row" }}>
+        <View style={{ flexDirection: "row", alignItems: "center" }}>
           <Text>Every</Text>
           <TextInput
-            value={frequencyToCallMomInDays}
+            keyboardType="number-pad"
+            value={frequencyToCallMomInDays?.toString()}
             onChangeText={setFrequencyToCallMomInDays}
             style={styles.callIntervalInput}
           />
@@ -172,11 +176,11 @@ const styles = StyleSheet.create({
   },
   callIntervalInput: {
     ...globalStyles.textInput,
-    height: 20,
     width: 40,
-    paddingLeft: 10,
-    paddingRight: 10,
-    marginHorizontal: 20,
+    textAlign: "center",
+    textAlignVertical: "center",
+    fontWeight: "bold",
+    fontSize: 20,
   },
   section: {
     paddingVertical: 15,

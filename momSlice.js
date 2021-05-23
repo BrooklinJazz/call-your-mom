@@ -12,7 +12,7 @@ const momSlice = createSlice({
     momsBirthday: undefined,
     shouldNotifyMomOnBirthday: false,
     shouldNotifyMomOnMothersDay: false,
-    frequencyToCallMomInDays: "7",
+    frequencyToCallMomInDays: 7,
   },
   reducers: {
     setMomsPhoneNumber(state, action) {
@@ -34,8 +34,6 @@ const momSlice = createSlice({
       state.currentRoute = action.payload;
     },
     setLastTimeCalledMom(state, action) {
-      // AsyncStorage.setItem(StorageKeys.lastCallTime, action.payload);
-
       state.lastCalledTime = action.payload;
     },
     addToCallHistoryAction(state, action) {
