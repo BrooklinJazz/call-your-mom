@@ -3,15 +3,33 @@ import { Text, View, TextInput, StyleSheet, Image } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Surface, Title, Button } from "react-native-paper";
 import { useDispatch, useSelector } from "react-redux";
-import { setMomsPhoneNumber, setNavigation } from "./momSlice";
-import { selectPhoneNumber } from "./selectors";
+import {
+  setMomsPhoneNumber,
+  setNavigation,
+  setShouldNotifyMomOnMothersDayAction,
+  setShouldNotifyMomOnBirthdayAction,
+} from "./momSlice";
+import {
+  selectPhoneNumber,
+  selectMomsBirthday,
+  selectShouldNotifyMomOnBirthday,
+  selectShouldNotifyMomOnMothersDay,
+} from "./selectors";
 import { Routes } from "./Routes";
 import * as globalStyles from "./Styles";
 
 export const SettingsForm = () => {
   const [callInterval, setCallInterval] = useState("1");
-  const [remindOnMothersDay, setRemindOnMothersDay] = useState(false);
-  const [remindOnBirthday, setRemindOnBirthday] = useState(true);
+
+  const setRemindOnMothersDay = (shouldRemind) =>
+    dispatch(setShouldNotifyMomOnMothersDayAction(shouldRemind));
+
+  const setRemindOnBirthday = (shouldRemind) =>
+    dispatch(setShouldNotifyMomOnBirthdayAction(shouldRemind));
+
+  const momsBirthday = useSelector(selectMomsBirthday);
+  const remindOnBirthday = useSelector(selectShouldNotifyMomOnBirthday);
+  const remindOnMothersDay = useSelector(selectShouldNotifyMomOnMothersDay);
 
   const dispatch = useDispatch();
   const setPhoneNumber = (phNumber) => dispatch(setMomsPhoneNumber(phNumber));

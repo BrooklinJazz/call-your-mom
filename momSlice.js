@@ -9,10 +9,22 @@ const momSlice = createSlice({
     currentRoute: Routes.CallHistory,
     lastCalledTime: undefined,
     callHistory: [],
+    momsBirthday: undefined,
+    shouldNotifyMomOnBirthday: false,
+    shouldNotifyMomOnMothersDay: false,
   },
   reducers: {
     setMomsPhoneNumber(state, action) {
       state.phoneNumber = action.payload;
+    },
+    setMomsBirthdayAction(state, action) {
+      state.momsBirthday = action.payload;
+    },
+    setShouldNotifyMomOnBirthdayAction(state, action) {
+      state.shouldNotifyMomOnBirthday = action.payload;
+    },
+    setShouldNotifyMomOnMothersDayAction(state, action) {
+      state.shouldNotifyMomOnMothersDay = action.payload;
     },
     setNavigation(state, action) {
       state.currentRoute = action.payload;
@@ -46,6 +58,9 @@ export const {
   setLastTimeCalledMom,
   setCallHistoryAction,
   addToCallHistoryAction,
+  setMomsBirthdayAction,
+  setShouldNotifyMomOnBirthdayAction,
+  setShouldNotifyMomOnMothersDayAction,
 } = momSlice.actions;
 
 export default momSlice.reducer;
