@@ -26,7 +26,7 @@ export const cornerRadius = 20;
 export const header = {
   fontSize: 30,
   fontFamily: fonts.bold,
-  paddingVertical: 30,
+  paddingBottom: 30,
 };
 
 export const centerContents = {

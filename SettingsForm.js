@@ -160,6 +160,7 @@ const styles = StyleSheet.create({
   },
   section: {
     paddingVertical: 15,
+    justifyContent: "center",
   },
   bottomBorder: {
     borderBottomWidth: 1,
@@ -168,6 +169,7 @@ const styles = StyleSheet.create({
   settingTitle: {
     fontFamily: globalStyles.fonts.bold,
     fontSize: 18,
+    paddingBottom: 15,
   },
   button: {
     ...globalStyles.button,

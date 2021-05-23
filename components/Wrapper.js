@@ -8,9 +8,7 @@ export default Wrapper = ({ children }) => {
 
 const style = StyleSheet.create({
   wrapper: {
-    ...globalStyles.centerContents,
-    height: "100%",
-    width: "100%",
-    paddingHorizontal: 20,
+    flex: 1,
+    padding: "10%",
   },
 });
