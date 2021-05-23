@@ -4,7 +4,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useDispatch, useSelector } from "react-redux";
 import { setMomsPhoneNumber, setNavigation } from "./momSlice";
 import { selectPhoneNumber } from "./selectors";
-import { Routes } from "./Navigation";
+import { Routes } from "./Routes";
 
 export const SettingsForm = () => {
   const dispatch = useDispatch();
