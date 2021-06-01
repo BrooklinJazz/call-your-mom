@@ -1,6 +1,6 @@
 # Call Your Mom
 
-> `An app to nag you, even when she isn't there`
+> `An app to stay connected with one of the most important people in your life`
 
 ## Made By
 
@@ -18,7 +18,6 @@ Kayla Wu
 <a href="https://www.linkedin.com/in/kayla-wu-designer/">
 <img  src="https://media-exp1.licdn.com/dms/image/C5603AQFqW7qxADwk4w/profile-displayphoto-shrink_100_100/0/1604038624033?e=1627516800&v=beta&t=EbFqvwd445pYg3hjW0xBfzmf-5tG93-l19YsiR7SpBg" alt="drawing" width="64"/>
 </a>
-
 
 ## Getting started
 
